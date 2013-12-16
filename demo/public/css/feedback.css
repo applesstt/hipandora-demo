@@ -1,0 +1,97 @@
+.wrap-inner {
+  width: 900px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.feedback-top {
+  margin-top: 20px;
+}
+
+.feedback-tabs {
+  float: left;
+  width: 500px;
+}
+.feedback-tabs a {
+  font-size: 14px;
+  line-height: 14px;
+  display: block;
+  float: left;
+}
+.feedback-tabs a em {
+  font-style: normal;
+  font-size: 12px;
+}
+.feedback-tabs a.feedback-tab-sel {
+  color: #000000;
+}
+.feedback-tab-line {
+  color: #b9b9b9;
+  margin-left: 10px;
+  margin-right: 10px;
+  font-size: 14px;
+  line-height: 14px;
+  float: left;
+}
+
+.feedback-filter {
+  float: right;
+}
+.feedback-filter span {}
+.feedback-filter select {}
+
+.feedback-list {
+  border-top: 1px solid #b2b2b2;
+  border-bottom: 1px solid #b2b2b2;
+  margin-top: 5px;
+}
+.feedback-row {
+  border-bottom: 1px dotted #b2b2b2;
+  padding: 20px 15px;
+}
+.feedback-row-last {
+  border-bottom: none;
+}
+.feedback-row-readed {
+  background-color: #f3f3f3;
+}
+.feedback-row-account {
+  float: left;
+  width: 40px;
+  height: 40px;
+  display: block;
+}
+.feedback-row-content {
+  float: left;
+  width: 490px;
+  margin-left: 10px;
+}
+.feedback-row-title,
+.feedback-row-title a {
+  line-height: 20px;
+  height: 20px;
+  overflow: hidden;
+}
+.feedback-row-feed {
+  float: left;
+}
+.feedback-row-feed a {}
+.feedback-row-num {
+  float: left;
+  width: 120px;
+  margin-left: 20px;
+  line-height: 40px;
+}
+.feedback-row-time {
+  width: 120px;
+  margin-left: 20px;
+  float: left;
+  line-height: 40px;
+}
+.feedback-row-action {
+  float: right;
+  margin-right: 20px;
+}
+.feedback-row-action {
+  line-height: 40px;
+}

@@ -1,0 +1,54 @@
+.account-tip {}
+
+.account-tip-content {
+  padding: 10px;
+  background-color: #ffffff;
+}
+.account-tip-image {
+  width: 40px;
+  height: 40px;
+  display: block;
+  float: left;
+}
+.account-tip-info {
+  width: 160px;
+  float: left;
+  margin-left: 10px;
+}
+.account-tip-title,
+.account-tip-title a {
+  line-height: 12px;
+  height: 12px;
+  overflow: hidden;
+}
+.account-tip-focus {
+  background: url(../image/btn/focus-btn.png) no-repeat 0 0;
+  width: 33px;
+  height: 20px;
+  line-height: 20px;
+  padding-left: 17px;
+  display: block;
+  margin-top: 8px;
+  color: #666666;
+}
+
+.account-tip-footer {
+  background-color: #f2f2f2;
+  padding: 7px;
+}
+.account-tip-footer a {
+  display: block;
+  float: left;
+  color: #666666;
+  border-right: 1px solid #666666;
+  margin-right: 7px;
+  padding-right: 7px;
+  height: 10px;
+  line-height: 10px;
+  font-size: 10px;
+}
+.account-tip-footer a.account-tip-footer-link-last {
+  border-right: none;
+  margin-right: 0;
+  padding-right: 0;
+}

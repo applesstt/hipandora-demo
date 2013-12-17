@@ -20,7 +20,7 @@ block content
           - var cls = 'clearfix feedback-row' +  (i < 3 ? ' feedback-row-readed' : '')
           - cls += i == 9 ? ' feedback-row-last' : ''
           div(class=cls)
-            img.feedback-row-account(src='public/image/demo/account-40.png')
+            img.feedback-row-account.account-tip(src='public/image/demo/account-40.png')
             .feedback-row-content
               .feedback-row-title
                 a(href='/') Fanny
@@ -31,3 +31,11 @@ block content
             .feedback-row-time 26 秒前
             .feedback-row-action
               a(href='/') 查看
+  script.
+    $(function() {
+      $('.account-tip').tooltipster({
+        interactive: true,
+        theme: '.tooltipster-shadow',
+        content: 'test'
+      });
+    });

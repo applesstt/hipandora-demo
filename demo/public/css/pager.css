@@ -1,0 +1,14 @@
+.pager {
+  text-align: center;
+}
+.pager a {}
+.pager a:hover {}
+.pager em {}
+
+.pager-prev {}
+.pager-next {}
+.pager .pager-prev:hover,
+.pager .pager-next:hover {
+
+}
+.pager-disabled {}

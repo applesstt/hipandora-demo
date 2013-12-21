@@ -1,18 +1,78 @@
-.notice-top {}
-.notice-title {}
-.notice-title em {}
-.notice-action-all {}
+.notice-top {
+  margin-top: 20px;
+}
+.notice-title {
+  float: left;
+  font-size: 24px;
+  line-height: 24px;
+}
+.notice-title em {
+  font-style: normal;
+  font-size: 12px;
+}
+.notice-action-all {
+  float: right;
+  padding-right: 12px;
+}
 
-.gray-min-btn {}
-.btn-check {}
+.gray-min-btn {
+  border: 1px solid #c2c2c2;
+  border-radius: 2px;
+  background-color: #f3f3f3;
+  height: 18px;
+  line-height: 18px;
+  padding-left: 5px;
+  padding-right: 5px;
+  cursor: pointer;
+  display: block;
+  color: #333333;
+}
+.btn-check {
+  padding: 0;
+  margin: 0;
+}
 
-.notice-list {}
-.notice-row {}
-.notice-row-last {}
-.notice-row-account {}
-.notice-row-content {}
-.notice-row-time {}
-.notice-row-del {}
-.notice-row-del a {}
-.notice-row-checkbox {}
-.notice-row-check {}
+.notice-list {
+  border-top: 1px solid #b2b2b2;
+  border-bottom: 1px solid #b2b2b2;
+  margin-top: 5px;
+}
+.notice-row {
+  border-bottom: 1px dotted #b2b2b2;
+  padding: 20px 15px;
+}
+.notice-row-last {
+  border-bottom: none;
+}
+.notice-row-account {
+  float: left;
+  width: 40px;
+  height: 40px;
+  display: block;
+}
+.notice-row-content {
+  float: left;
+  width: 685px;
+  margin-left: 10px;
+}
+.notice-row-time {
+  width: 120px;
+  margin-left: 20px;
+  float: left;
+  line-height: 40px;
+}
+.notice-row-del {
+  width: 40px;
+  float: left;
+}
+.notice-row-del a {
+  line-height: 40px;
+  display: block;
+}
+.notice-row-checkbox {
+  width: 12px;
+  float: left;
+}
+.notice-row-check {
+  margin: 14px 0 0 0;
+}

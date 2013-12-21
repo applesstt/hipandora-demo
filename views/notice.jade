@@ -8,9 +8,10 @@ block content
         .notice-title 通知
           em （共15条）
         .notice-action-all.clearfix
-          a.gray-min-btn(href='javascript:{}') 删除
-          .ml10.gray-min-btn 全选
-            input.btn-check(type='checkbox')
+          a.gray-min-btn.left(href='javascript:{}') 删除
+          .left.ml10.gray-min-btn
+            label 全选
+              input.btn-check(type='checkbox')
       .notice-list
         - for(var i = 0; i < 10; i++)
           - var cls = 'clearfix notice-row'

@@ -10,7 +10,7 @@ block content
         .notice-action-all.clearfix
           a.gray-min-btn(href='javascript:{}') 删除
           .ml10.gray-min-btn 全选
-            input(type='checkbox')
+            input.btn-check(type='checkbox')
       .notice-list
         - for(var i = 0; i < 10; i++)
           - var cls = 'clearfix notice-row'
@@ -22,7 +22,7 @@ block content
             .notice-row-del
               a(href='javascript:{}') 删除
             .notice-row-checkbox
-              input(type='checkbox')
+              input.notice-row-check(type='checkbox')
       .p10
         include include/pager
   #tip-template.none

@@ -32,18 +32,7 @@ block content
             .feedback-row-action
               a(href='/') 查看
       .p10
-        .pager
-          a.pager-prev.pager-disabled(href='/') 前页
-          a.pager-link(href='/') 1
-          a.pager-link(href='/') 2
-          em ...
-          a.pager-link(href='/') 5
-          em 6
-          a.pager-link(href='/') 7
-          a.pager-link(href='/') 8
-          a.pager-link(href='/') 9
-          em ...
-          a.pager-next(href='/') 后页
+        include include/pager
   #tip-template.none
     .account-tip
       .account-tip-content.clearfix

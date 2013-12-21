@@ -1,0 +1,52 @@
+extends layout/layout
+
+block content
+  link(rel='stylesheet', href='public/css/notice.css')
+  .wrap
+    .wrap-inner
+      .notice-top.clearfix
+        .notice-title 通知
+          em （共15条）
+        .notice-action-all.clearfix
+          a.gray-min-btn(href='javascript:{}') 删除
+          .ml10.gray-min-btn 全选
+            input(type='checkbox')
+      .notice-list
+        - for(var i = 0; i < 10; i++)
+          - var cls = 'clearfix notice-row'
+          - cls += i == 9 ? ' notice-row-last' : ''
+          div(class=cls)
+            img.notice-row-account.account-tip(src='public/image/demo/account-40.png')
+            .notice-row-content 在我的【手记】2013新年欧洲6国19日游
+            .notice-row-time 26 秒前
+            .notice-row-del
+              a(href='javascript:{}') 删除
+            .notice-row-checkbox
+              input(type='checkbox')
+      .p10
+        include include/pager
+  #tip-template.none
+    .account-tip
+      .account-tip-content.clearfix
+        img.account-tip-image(src='public/image/demo/account-40.png')
+        .account-tip-info
+          .account-tip-title
+            a(href='javascript:{}') 与温暖终年不遇g
+            |&nbsp;-&nbsp;女神
+          a.account-tip-focus(href='javascript:{}') 关注
+      .account-tip-footer.clearfix
+        a(href='javascript:{}') 个人手记
+        a(href='javascript:{}') 装备秀
+        a(href='javascript:{}') 旅行相册
+        a(href='javascript:{}') 忠告
+        a(href='javascript:{}') 美食
+        a.account-tip-footer-link-last(href='javascript:{}') ...
+  script.
+    $(function() {
+      $('.account-tip').tooltipster({
+        interactive: true,
+        theme: '.tooltipster-shadow',
+        position: 'bottom-left',
+        content: $('#tip-template').html()
+      });
+    });

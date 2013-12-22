@@ -32,47 +32,62 @@
   margin: 0;
 }
 
-.notice-list {
+table.notice-list {
   border-top: 1px solid #b2b2b2;
   border-bottom: 1px solid #b2b2b2;
   margin-top: 5px;
+  vertical-align: middle;
 }
-.notice-row {
+tr.notice-row td {
   border-bottom: 1px dotted #b2b2b2;
-  padding: 20px 15px;
+  padding: 20px 0;
 }
-.notice-row-last {
+tr.notice-row-last td {
   border-bottom: none;
 }
 .notice-row-account {
-  float: left;
   width: 40px;
-  height: 40px;
+  padding-left: 20px;
   display: block;
 }
 .notice-row-content {
-  float: left;
-  width: 685px;
+  width: 600px;
+  padding-right: 20px;
   margin-left: 10px;
+  line-height: 20px;
+  height: 40px;
+  overflow: hidden;
+  position: relative;
+}
+.notice-row-content-open {
+  height: auto;
+}
+.notice-row-content b {
+  position: absolute;
+  top: 0;
+  right: 0;
+  display: block;
+  height: 100%;
+  width: 7px;
+  background: url(../image/icon/notice-down-arrow.png) no-repeat 100% 50%;
+  cursor: pointer;
+}
+.notice-row-content-open b {
+  background: url(../image/icon/notice-up-arrow.png) no-repeat 100% 50%;
 }
 .notice-row-time {
-  width: 120px;
-  margin-left: 20px;
-  float: left;
-  line-height: 40px;
+  width: 185px;
+  text-align: center;
 }
 .notice-row-del {
   width: 40px;
-  float: left;
 }
 .notice-row-del a {
-  line-height: 40px;
   display: block;
 }
 .notice-row-checkbox {
   width: 12px;
-  float: left;
+  padding-right: 20px;
 }
 .notice-row-check {
-  margin: 14px 0 0 0;
 }

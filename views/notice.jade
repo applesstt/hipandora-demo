@@ -12,18 +12,25 @@ block content
           .left.ml10.gray-min-btn
             label 全选
               input.btn-check(type='checkbox')
-      .notice-list
-        - for(var i = 0; i < 10; i++)
-          - var cls = 'clearfix notice-row'
-          - cls += i == 9 ? ' notice-row-last' : ''
-          div(class=cls)
-            img.notice-row-account.account-tip(src='public/image/demo/account-40.png')
-            .notice-row-content 在我的【手记】2013新年欧洲6国19日游
-            .notice-row-time 26 秒前
-            .notice-row-del
-              a(href='javascript:{}') 删除
-            .notice-row-checkbox
-              input.notice-row-check(type='checkbox')
+      table.notice-list
+        tbody
+          - for(var i = 0; i < 10; i++)
+            - var cls = 'notice-row'
+            - cls += i == 9 ? ' notice-row-last' : ''
+            tr(class=cls)
+              td
+                img.notice-row-account.account-tip(src='public/image/demo/account-40.png')
+              td
+                .notice-row-content 在我的【手记】2013新年欧洲6国19日游在我的【手记】2013新年欧洲6国19日游在我的【手记】2013新年欧洲6国19日游在我的【手记】2013新年欧洲6国19日游在我的【手记】2013新年欧洲6国19日游在我的【手记】2013新年欧洲6国19日游在我的【手记】2013新年欧洲6国19日游在我的【手记】2013新年欧洲6国19日游在我的【手记】2013新年欧洲6国19日游在我的【手记】2013新年欧洲6国19日游在我的【手记】2013新年欧洲6国19日游在我的【手记】2013新年欧洲6国19日游
+                  b
+              td
+                .notice-row-time 26 秒前
+              td
+                .notice-row-del
+                  a(href='javascript:{}') 删除
+              td
+                .notice-row-checkbox
+                  input.notice-row-check(type='checkbox')
       .p10
         include include/pager
   #tip-template.none
@@ -49,5 +56,10 @@ block content
         theme: '.tooltipster-shadow',
         position: 'bottom-left',
         content: $('#tip-template').html()
+      });
+
+      //展开 or 收缩 通知内容
+      $('.notice-row-content b').click(function() {
+        $(this).parent().toggleClass('notice-row-content-open');
       });
     });

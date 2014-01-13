@@ -10,3 +10,7 @@ exports.feedback = function(req, res){
 exports.notice = function(req, res) {
   res.render('notice');
 };
+
+exports.timeLine = function(req, res) {
+  res.render('time-line');
+};

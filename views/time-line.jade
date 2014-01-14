@@ -4,3 +4,17 @@ block content
   link(rel='stylesheet', href='public/css/time-line.css')
   .wrap
     .wrap-inner
+      .time-line.clearfix
+        .drag-left
+        .time-line-box.clearfix
+          - var names = ['北京','阿维尼翁','尼斯','普罗旺斯','马赛','北京']
+          - for (var i = 0; i < names.length; i++)
+            - var localCls = i == 0 ? 'time-line-location' : ''
+            - var curCls = i == 0 ? 'time-line-current' : ''
+            .time-line-item(class=localCls)
+              .time-line-name #{name}
+              .time-line-circle(class=curCls) 10.0#{i}
+            - if ( i + 1 < names.length)
+              .time-line-add
+                .time-line-add-content
+        .drag-right

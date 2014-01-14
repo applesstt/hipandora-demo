@@ -1,0 +1,54 @@
+.time-line {}
+
+.drag-left, .drag-right {
+  width: 20px;
+  height: 20px;
+}
+.drag-left {
+  background: url(../image/time-line/left-btn.png) no-repeat 50% 50%;
+}
+.drag-right {
+  background: url(../image/time-line/right-btn.png) no-repeat 50% 50%;
+}
+
+.time-line-box {}
+
+.time-line-item {
+  background: url(../image/time-line/dot.png) no-repeat 50% 50%;
+  width: 4px;
+  height: 4px;
+}
+.time-line-location {
+  background: url(../image/time-line/location.png) no-repeat 50% 50%;
+  width: 17px;
+  height: 17px;
+}
+
+.time-line-name {}
+
+.time-line-circle, .time-line-current, .time-line-action {
+  width: 36px;
+  height: 36px;
+  line-height: 36px;
+  text-align: center;
+}
+.time-line-circle {
+  background: url(../image/time-line/circle-default.png) no-repeat 50% 50%;
+}
+.time-line-current {
+  background: url(../image/time-line/circle-current.png) no-repeat 50% 50%;
+}
+.time-line-action {
+  background: url(../image/time-line/circle-action.png) no-repeat 50% 50%;
+}
+
+.time-line-add {
+  background: url(../image/time-line/add.png) no-repeat 50% 50%;
+  width: 11px;
+  height: 11px;
+}
+.time-line-add-content {
+  background: url(../image/time-line/add-content.png) no-repeat 50% 50%;
+  width: 22px;
+  height: 75px;
+}

@@ -85,7 +85,7 @@
 }
 
 .time-line-add {
-  background: url(../image/time-line/add.png) no-repeat 50% 50%;
+  background: none;
   width: 120px;
   height: 20px;
   float: left;
@@ -100,4 +100,12 @@
   position: absolute;
   top: 20px;
   left: 49px;
+  display: none;
+}
+
+.time-line-add:hover {
+  background: url(../image/time-line/add.png) no-repeat 50% 50%;
+}
+.time-line-add:hover .time-line-add-content {
+  display: block;
 }

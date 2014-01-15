@@ -5,6 +5,12 @@ var timeLine = (function() {
   //设置当前天
   var _setCurDay = function() {};
   var _resetDragBtn = function() {
+    $('.drag-left').unbind('click').click(function() {
+      _dragLeft();
+    });
+    $('.drag-right').unbind('click').click(function() {
+      _dragRight();
+    });
     $('.drag-left').css('visibility', (_firstDay == 0 ? 'hidden' : 'visible'));
     $('.drag-right').css('visibility', (_firstDay + 5 == _days ? 'hidden' : 'visible'));
   };
@@ -12,25 +18,24 @@ var timeLine = (function() {
   var _dragLeft = function() {
     if(_firstDay > 0) {
       $('.time-line-inner').animate({
-        left: parseFloat($('.time-line-inner').css('left')) + 160
+        left: parseFloat($('.time-line-inner').css('left')) + 177
       });
       _firstDay--;
-      _resetDragBtn();
+      init();
     }
   };
   //右侧按钮事件
   var _dragRight = function() {
     if(_firstDay + 5 < _days) {
       $('.time-line-inner').animate({
-        left: parseFloat($('.time-line-inner').css('left')) - 160
+        left: parseFloat($('.time-line-inner').css('left')) - 177
       });
       _firstDay++;
-      _resetDragBtn();
+      init();
     }
   };
   //插入一天
-  var _insertDay = function(afterDayIndex) {
-    _days++;
+  var _insertDay = function(index) {
     var htmlAry = ['<div class="time-line-item">',
       '<div class="time-line-name">new city</div>',
       '<div class="time-line-circle">new date',
@@ -40,12 +45,19 @@ var timeLine = (function() {
     '<div class="time-line-add">',
       '<div class="time-line-add-content"></div>',
     '</div>'];
-    $('.time-line-add:eq(' + afterDayIndex + ')').after($(htmlAry.join('')));
-    _initAddFun();
-    afterInsertDay(afterDayIndex);
+    $('.time-line-add:eq(' + index + ')').after($(htmlAry.join('')));
+    afterInsertDay(index);
+    _days++;
+    init();
   };
   //删除一天
-  var _delDay = function() {};
+  var _delDay = function(index) {
+    $('.time-line-item:eq(' + index + ')').remove();
+    $('.time-line-add:eq(' + index + ')').remove();
+    afterDelDay(index);
+    _days--;
+    init();
+  };
 
   //初始化添加一天按钮
   var _initAddFun = function() {
@@ -54,6 +66,15 @@ var timeLine = (function() {
         _insertDay(index);
       })
     });
+  };
+
+  //初始化删除按钮
+  var _initDelFun = function() {
+    $('.time-line-del').each(function(index, element) {
+      $(element).unbind('click').click(function() {
+        _delDay(index);
+      })
+    })
   };
 
   var afterInsertDay = function() {};
@@ -65,14 +86,9 @@ var timeLine = (function() {
 
   //时间轴初始化
   var init = function() {
-    $('.drag-left').click(function() {
-      _dragLeft();
-    });
-    $('.drag-right').click(function() {
-      _dragRight();
-    });
     _resetDragBtn();
     _initAddFun();
+    _initDelFun();
   };
   return {
     init: init,

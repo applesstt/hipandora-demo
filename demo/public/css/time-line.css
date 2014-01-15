@@ -8,6 +8,7 @@
   float: left;
   cursor: pointer;
   display: block;
+  visibility: hidden;
 }
 .drag-left {
   background: url(../image/time-line/left-btn.png) no-repeat 50% 20px;

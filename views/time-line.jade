@@ -32,3 +32,8 @@ block content
           h5 afterDelDay
         h3 setCityName
         p 当修改了某一天的城市名称后，修改时间轴对应点的名称
+  script(src='public/js/time-line.js')
+  script.
+    $(function() {
+      timeLine.init();
+    });

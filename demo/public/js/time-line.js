@@ -29,9 +29,32 @@ var timeLine = (function() {
     }
   };
   //插入一天
-  var _insertDay = function() {};
+  var _insertDay = function(afterDayIndex) {
+    _days++;
+    var htmlAry = ['<div class="time-line-item">',
+      '<div class="time-line-name">new city</div>',
+      '<div class="time-line-circle">new date',
+        '<div class="time-line-del"></div>',
+      '</div>',
+    '</div>',
+    '<div class="time-line-add">',
+      '<div class="time-line-add-content"></div>',
+    '</div>'];
+    $('.time-line-add:eq(' + afterDayIndex + ')').after($(htmlAry.join('')));
+    _initAddFun();
+    afterInsertDay(afterDayIndex);
+  };
   //删除一天
   var _delDay = function() {};
+
+  //初始化添加一天按钮
+  var _initAddFun = function() {
+    $('.time-line-add').unbind('click').each(function(index, element) {
+      $(element).click(function() {
+        _insertDay(index);
+      })
+    });
+  };
 
   var afterInsertDay = function() {};
   var afterSetCurDay = function() {};
@@ -49,6 +72,7 @@ var timeLine = (function() {
       _dragRight();
     });
     _resetDragBtn();
+    _initAddFun();
   };
   return {
     init: init,

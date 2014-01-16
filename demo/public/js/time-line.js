@@ -82,7 +82,7 @@ var timeLine = (function() {
       month: _getShowMonthByDate(indexDate), day: _getShowDayByDate(indexDate), city: ''
     });
     $('.time-line-add:eq(' + index + ')').after($(dayHtml));
-    afterInsertDay(index);
+    insertDayCallback(index + 1);
     _days++;
     _curDay = index + 1;
     _resetNextItemDate(index + 1);
@@ -92,7 +92,7 @@ var timeLine = (function() {
   var delDay = function(index) {
     $('.time-line-item:eq(' + index + ')').remove();
     $('.time-line-add:eq(' + index + ')').remove();
-    afterDelDay(index);
+    delDayCallback(index);
     _days--;
     //如果当前选中时间是最後一天 删除一个时间点后 调整选中时间前移
     if(_curDay + 1 > _days) {
@@ -220,6 +220,12 @@ var timeLine = (function() {
     if(config.data) {
       _initData(config.data);
     }
+    if(typeof config.insertDayCallback === 'function') {
+      insertDayCallback = config.insertDayCallback;
+    }
+    if(typeof config.delDayCallback === 'function') {
+      delDayCallback = config.delDayCallback;
+    }
   };
 
   //初始化通用的基本设置
@@ -231,9 +237,8 @@ var timeLine = (function() {
     _initDelFun();
   };
 
-  var afterInsertDay = function() {};
-  var afterSetCurDay = function() {};
-  var afterDelDay = function() {};
+  var insertDayCallback = function() {};
+  var delDayCallback = function() {};
 
   //设置或修改某日的城市名称
   var setCityName = function(index, cityName) {
@@ -249,9 +254,6 @@ var timeLine = (function() {
   return {
     init: init,
     delDay: delDay,
-    setCityName: setCityName,
-    afterInsertDay: afterInsertDay,
-    afterSetCurDay: afterSetCurDay,
-    afterDelDay: afterDelDay
+    setCityName: setCityName
   }
 }).call(this)

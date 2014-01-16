@@ -17,11 +17,11 @@ block content
         h4 config
         .ml10
           h5 afterInsertDay
-          h5 afterSetCurDay
           h5 afterDelDay
-        h3 setCityName(index, cityName);
-        p 当修改了某一天的城市名称后，修改时间轴对应点的名称
-        p index 从0开始
+        h3 setCityName(index, cityName)
+        .ml10
+          p 当修改了某一天的城市名称后，修改时间轴对应点的名称
+          p index 从0开始
   script(src='public/js/time-line.js')
   script.
     var cityData = [{
@@ -51,6 +51,12 @@ block content
     }]
     $(function() {
       timeLine.init({
-        data: cityData
+        data: cityData,
+        insertDayCallback: function(index) {
+          console.log('insert day callback index: ' + index);
+        },
+        delDayCallback: function(index) {
+          console.log('del day callback index: ' + index);
+        }
       });
     });

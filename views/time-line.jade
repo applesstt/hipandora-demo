@@ -8,17 +8,6 @@ block content
         .drag-left
         .time-line-box
           .time-line-inner.clearfix
-            - var names = ['北京','阿维尼翁','尼斯','普罗旺斯','马赛','北京']
-            - for (var i = 0; i < names.length; i++)
-              - var localCls = i == 0 ? 'time-line-location time-line-first' : ''
-              - var curCls = i == 0 ? 'time-line-current' : ''
-              .time-line-item(class=localCls)
-                .time-line-name #{names[i]}
-                .time-line-circle(class=curCls) 10.0#{i}
-                  .time-line-del
-              - if ( i + 1 < names.length)
-                .time-line-add
-                  .time-line-add-content
         .drag-right
       .mt20
         h1 timeLine使用说明
@@ -34,6 +23,33 @@ block content
         p 当修改了某一天的城市名称后，修改时间轴对应点的名称
   script(src='public/js/time-line.js')
   script.
+    var cityData = [{
+      month: 10,
+      day: 1,
+      city: '北京'
+    }, {
+      month: 10,
+      day: 2,
+      city: '阿维尼翁'
+    }, {
+      month: 10,
+      day: 3,
+      city: '尼斯'
+    }, {
+      month: 10,
+      day: 4,
+      city: '普罗旺斯'
+    }, {
+      month: 10,
+      day: 5,
+      city: '马赛'
+    }, {
+      month: 10,
+      day: 6,
+      city: '北京'
+    }]
     $(function() {
-      timeLine.init();
+      timeLine.init({
+        data: cityData
+      });
     });

@@ -1,6 +1,6 @@
 var timeLine = (function() {
-  var _firstDay = 0;
-  var _days = 6;
+  var _firstDay = 0, _days = 0, _curDay = 0;
+  var _dragging = false;
 
   //设置当前天
   var _setCurDay = function() {};
@@ -17,8 +17,12 @@ var timeLine = (function() {
   //左侧按钮事件
   var _dragLeft = function() {
     if(_firstDay > 0) {
+      if(_dragging) return;
+      _dragging = true;
       $('.time-line-inner').animate({
-        left: parseFloat($('.time-line-inner').css('left')) + 177
+        left: '+=177'
+      }, function() {
+          _dragging = false;
       });
       _firstDay--;
       init();
@@ -27,27 +31,43 @@ var timeLine = (function() {
   //右侧按钮事件
   var _dragRight = function() {
     if(_firstDay + 5 < _days) {
+      if(_dragging) return;
+      _dragging = true;
       $('.time-line-inner').animate({
-        left: parseFloat($('.time-line-inner').css('left')) - 177
+        left: '-=177'
+      }, function() {
+          _dragging = false;
       });
       _firstDay++;
       init();
     }
   };
-  //插入一天
-  var _insertDay = function(index) {
-    var htmlAry = ['<div class="time-line-item">',
-      '<div class="time-line-name">new city</div>',
-      '<div class="time-line-circle">new date',
+
+  //构造一个日期html
+  //data: { month: 10, day: 1, city: '北京' }
+  var _getDayHtml = function(data) {
+    var city = data.city;
+    var showDate = data.month + '.' + data.day;
+    return ['<div class="time-line-item">',
+      '<div class="time-line-name">', city, '</div>',
+      '<div class="time-line-circle">', showDate,
         '<div class="time-line-del"></div>',
       '</div>',
     '</div>',
     '<div class="time-line-add">',
       '<div class="time-line-add-content"></div>',
-    '</div>'];
-    $('.time-line-add:eq(' + index + ')').after($(htmlAry.join('')));
+    '</div>'].join('');
+  };
+
+  //插入一天
+  var _insertDay = function(index) {
+    var dayHtml = _getDayHtml({
+      month: 10, day: 1, city: ''
+    });
+    $('.time-line-add:eq(' + index + ')').after($(dayHtml));
     afterInsertDay(index);
     _days++;
+    _curDay = index + 1;
     init();
   };
   //删除一天
@@ -56,6 +76,7 @@ var timeLine = (function() {
     $('.time-line-add:eq(' + index + ')').remove();
     afterDelDay(index);
     _days--;
+    _curDay = index > 0 ? index - 1 : 0;
     init();
   };
 
@@ -77,6 +98,45 @@ var timeLine = (function() {
     })
   };
 
+  //初始化数据项
+  var _initData = function(dataList) {
+    _days = dataList.length;
+    var htmlAry = [];
+    for(var i = 0; i < dataList.length; i++) {
+      htmlAry.push(_getDayHtml(dataList[i]));
+    }
+    $('.time-line-inner').html(htmlAry.join(''));
+  };
+
+  //重置内部宽度
+  var _resizeInnerWidth = function() {
+    $('.time-line-inner').css('width', _days * 177 + 200);
+  };
+
+  //设置当前城市以及第一个城市的样式
+  var _resetCity = function() {
+    $('.time-line-item').removeClass('time-line-current').removeClass('time-line-first');
+    $('.time-line-item:eq(' + _curDay + ')').addClass('time-line-current');
+    $('.time-line-item:eq(0)').addClass('time-line-first');
+  };
+
+  //初始化相关配置
+  var _initConfig = function(config) {
+    if(typeof config === 'undefined') return;
+    if(config.data) {
+      _initData(config.data);
+    }
+  };
+
+  //初始化通用的基本设置
+  var _baseInit = function() {
+    _resizeInnerWidth();
+    _resetDragBtn();
+    _resetCity();
+    _initAddFun();
+    _initDelFun();
+  };
+
   var afterInsertDay = function() {};
   var afterSetCurDay = function() {};
   var afterDelDay = function() {};
@@ -85,10 +145,9 @@ var timeLine = (function() {
   var setCityName = function() {};
 
   //时间轴初始化
-  var init = function() {
-    _resetDragBtn();
-    _initAddFun();
-    _initDelFun();
+  var init = function(config) {
+    _initConfig(config);
+    _baseInit();
   };
   return {
     init: init,

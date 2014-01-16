@@ -38,6 +38,7 @@
   position: relative;
   overflow: visible;
   float: left;
+  cursor: pointer;
 }
 .time-line-first {
   margin-left: 50px;
@@ -57,10 +58,6 @@
 }
 
 .time-line-circle, .time-line-action {
-  width: 36px;
-  height: 36px;
-  line-height: 36px;
-  text-align: center;
   position: absolute;
   top: 22px;
   left: -9px;
@@ -72,6 +69,12 @@
 }
 .time-line-current .time-line-circle {
   background: url(../image/time-line/circle-current.png) no-repeat 50% 50%;
+}
+.time-line-date {
+  width: 36px;
+  height: 36px;
+  line-height: 36px;
+  text-align: center;
 }
 .time-line-del {
   background: url(../image/time-line/del.png) no-repeat 50% 50%;

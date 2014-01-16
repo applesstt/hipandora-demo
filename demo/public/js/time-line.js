@@ -50,7 +50,8 @@ var timeLine = (function() {
     var showDate = data.month + '.' + data.day;
     return ['<div class="time-line-item">',
       '<div class="time-line-name">', city, '</div>',
-      '<div class="time-line-circle">', showDate,
+      '<div class="time-line-circle">',
+        '<div class="time-line-date">', showDate, '</div>',
         '<div class="time-line-del"></div>',
       '</div>',
     '</div>',
@@ -113,11 +114,23 @@ var timeLine = (function() {
     $('.time-line-inner').css('width', _days * 177 + 200);
   };
 
-  //设置当前城市以及第一个城市的样式
+  //设置当前城市以及第一个城市的样式 及点击后切换为当前城市
   var _resetCity = function() {
     $('.time-line-item').removeClass('time-line-current').removeClass('time-line-first');
     $('.time-line-item:eq(' + _curDay + ')').addClass('time-line-current');
     $('.time-line-item:eq(0)').addClass('time-line-first');
+    $('.time-line-item').each(function(index, element) {
+      $(element).data('index', index + 1).data('date', $(element).find('.time-line-date').text());
+      $(element).unbind('click').click(function() {
+        _curDay = index;
+        _baseInit();
+      });
+      $(element).hover(function() {
+        $(this).find('.time-line-date').text('D' + $(this).data('index'));
+      }, function() {
+        $(this).find('.time-line-date').text($(this).data('date'));
+      });
+    });
   };
 
   //初始化相关配置

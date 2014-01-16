@@ -47,7 +47,10 @@ var timeLine = (function() {
   //data: { month: 10, day: 1, city: '北京' }
   var _getDayHtml = function(data) {
     var city = data.city;
-    var showDate = data.month + '.' + data.day;
+    var month = parseInt(data.month);
+    var day = parseInt(data.day);
+    day = day > 10 ? day : ('0' + day);
+    var showDate = month + '.' + day;
     return ['<div class="time-line-item">',
       '<div class="time-line-name">', city, '</div>',
       '<div class="time-line-circle">',
@@ -60,15 +63,29 @@ var timeLine = (function() {
     '</div>'].join('');
   };
 
+  //重置某节点后的显示日期
+  var _resetNextItemDate = function(index, isDel) {
+    var addNum = isDel ? -1 : 1;
+    $('.time-line-date:gt(' + index + ')').each(function() {
+      var showDate = $(this).text();
+      var date = _getDateByShow(showDate);
+      date.setDate(date.getDate() + addNum);
+      $(this).text(_getShowByDate(date));
+    });
+  };
+
   //插入一天
   var _insertDay = function(index) {
+    var indexDate = _getDateByShow($('.time-line-date:eq(' + index + ')').text());
+    indexDate.setDate(indexDate.getDate() + 1);
     var dayHtml = _getDayHtml({
-      month: 10, day: 1, city: ''
+      month: _getShowMonthByDate(indexDate), day: _getShowDayByDate(indexDate), city: ''
     });
     $('.time-line-add:eq(' + index + ')').after($(dayHtml));
     afterInsertDay(index);
     _days++;
     _curDay = index + 1;
+    _resetNextItemDate(index + 1);
     init();
   };
   //删除一天
@@ -78,6 +95,7 @@ var timeLine = (function() {
     afterDelDay(index);
     _days--;
     _curDay = index > 0 ? index - 1 : 0;
+    _resetNextItemDate(index - 1, true);
     init();
   };
 
@@ -114,21 +132,66 @@ var timeLine = (function() {
     $('.time-line-inner').css('width', _days * 177 + 200);
   };
 
+  //根据月份 日期 返回对应的Date对象
+  var _getDateByMonthAndDay = function(month, day) {
+    month = parseInt(month);
+    day = parseInt(day);
+    var date = new Date();
+    date.setMonth(month - 1);
+    date.setDate(day);
+    return date;
+  };
+
+  //根据Date对象 返回对应的月份
+  var _getShowMonthByDate = function(date) {
+    return date.getMonth() + 1;
+  };
+
+  //根据Date对象 返回对应的日期
+  var _getShowDayByDate = function(date) {
+    var day = date.getDate();
+    return day > 10 ? day : ('0' + day);
+  };
+
+  //根据Date对象 返回显示的日期
+  var _getShowByDate = function(date) {
+    return _getShowMonthByDate(date) + '.' + _getShowDayByDate(date);
+  };
+
+  //根据显示的日期 返回Date对象
+  var _getDateByShow = function(showDate) {
+    var dates = showDate.split('.');
+    if(dates.length === 2) {
+      return _getDateByMonthAndDay(dates[0], dates[1]);
+    }
+    return new Date();
+  };
+
   //设置当前城市以及第一个城市的样式 及点击后切换为当前城市
   var _resetCity = function() {
+    //清除已有的选中样式以及第一项样式
     $('.time-line-item').removeClass('time-line-current').removeClass('time-line-first');
+    //设置新的选中日期
     $('.time-line-item:eq(' + _curDay + ')').addClass('time-line-current');
+    //设置第一项的样式
     $('.time-line-item:eq(0)').addClass('time-line-first');
-    $('.time-line-item').each(function(index, element) {
-      $(element).data('index', index + 1).data('date', $(element).find('.time-line-date').text());
-      $(element).unbind('click').click(function() {
+
+    $('.time-line-item').each(function(index) {
+      var _item = this;
+      //为item绑定data数据 方便以后使用
+      var _showDate = $(_item).find('.time-line-date').text();
+      var _date = _getDateByShow(_showDate);
+      $(_item).data('index', index + 1).data('showDate', _showDate).data('date', _date);
+      //绑定item的click事件 click后切换为选中的item
+      $(_item).unbind('click').click(function() {
         _curDay = index;
         _baseInit();
       });
-      $(element).hover(function() {
-        $(this).find('.time-line-date').text('D' + $(this).data('index'));
+      //绑定item中日期的hover事件 鼠标划过显示Dx天 划出显示原有的日期
+      $(_item).find('.time-line-date').hover(function() {
+        $(this).text('D' + $(_item).data('index'));
       }, function() {
-        $(this).find('.time-line-date').text($(this).data('date'));
+        $(this).text($(_item).data('showDate'));
       });
     });
   };

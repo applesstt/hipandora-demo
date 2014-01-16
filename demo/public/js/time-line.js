@@ -89,12 +89,15 @@ var timeLine = (function() {
     init();
   };
   //删除一天
-  var _delDay = function(index) {
+  var delDay = function(index) {
     $('.time-line-item:eq(' + index + ')').remove();
     $('.time-line-add:eq(' + index + ')').remove();
     afterDelDay(index);
     _days--;
-    _curDay = index > 0 ? index - 1 : 0;
+    //如果当前选中时间是最後一天 删除一个时间点后 调整选中时间前移
+    if(_curDay + 1 > _days) {
+      _curDay = _days == 0 ? 0 : (_days - 1);
+    }
     _resetNextItemDate(index - 1, true);
     init();
   };
@@ -108,11 +111,17 @@ var timeLine = (function() {
     });
   };
 
+  //删除确认框
+  var _delDayDialog = function(index) {
+    //在此添加删除确认框代码 确认成功后回调下面的删除代码
+    timeLine.delDay(index);
+  };
+
   //初始化删除按钮
   var _initDelFun = function() {
     $('.time-line-del').each(function(index, element) {
       $(element).unbind('click').click(function() {
-        _delDay(index);
+        _delDayDialog(index);
       })
     })
   };
@@ -167,15 +176,8 @@ var timeLine = (function() {
     return new Date();
   };
 
-  //设置当前城市以及第一个城市的样式 及点击后切换为当前城市
-  var _resetCity = function() {
-    //清除已有的选中样式以及第一项样式
-    $('.time-line-item').removeClass('time-line-current').removeClass('time-line-first');
-    //设置新的选中日期
-    $('.time-line-item:eq(' + _curDay + ')').addClass('time-line-current');
-    //设置第一项的样式
-    $('.time-line-item:eq(0)').addClass('time-line-first');
-
+  //绑定每一个时间点的相关功能
+  var _bandItem = function() {
     $('.time-line-item').each(function(index) {
       var _item = this;
       //为item绑定data数据 方便以后使用
@@ -194,6 +196,17 @@ var timeLine = (function() {
         $(this).text($(_item).data('showDate'));
       });
     });
+  };
+
+  //设置当前城市以及第一个城市的样式 及点击后切换为当前城市
+  var _resetCity = function() {
+    //清除已有的选中样式以及第一项样式
+    $('.time-line-item').removeClass('time-line-current').removeClass('time-line-first');
+    //设置新的选中日期
+    $('.time-line-item:eq(' + _curDay + ')').addClass('time-line-current');
+    //设置第一项的样式
+    $('.time-line-item:eq(0)').addClass('time-line-first');
+    _bandItem();
   };
 
   //初始化相关配置
@@ -230,6 +243,7 @@ var timeLine = (function() {
   };
   return {
     init: init,
+    delDay: delDay,
     setCityName: setCityName,
     afterInsertDay: afterInsertDay,
     afterSetCurDay: afterSetCurDay,

@@ -155,7 +155,10 @@ var timeLine = (function() {
   var afterDelDay = function() {};
 
   //设置或修改某日的城市名称
-  var setCityName = function() {};
+  var setCityName = function(index, cityName) {
+    if(typeof index === 'undefined' || typeof cityName === 'undefined') return;
+    $('.time-line-item:eq(' + index + ')').find('.time-line-name').text(cityName);
+  };
 
   //时间轴初始化
   var init = function(config) {

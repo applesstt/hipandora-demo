@@ -19,8 +19,9 @@ block content
           h5 afterInsertDay
           h5 afterSetCurDay
           h5 afterDelDay
-        h3 setCityName
+        h3 setCityName(index, cityName);
         p 当修改了某一天的城市名称后，修改时间轴对应点的名称
+        p index 从0开始
   script(src='public/js/time-line.js')
   script.
     var cityData = [{

@@ -187,7 +187,7 @@ var timeLine = (function() {
       //绑定item的click事件 click后切换为选中的item
       $(_item).unbind('click').click(function() {
         _curDay = index;
-        _baseInit();
+        _resetCurCity();
       });
       //绑定item中日期的hover事件 鼠标划过显示Dx天 划出显示原有的日期
       $(_item).find('.time-line-date').hover(function() {
@@ -198,12 +198,17 @@ var timeLine = (function() {
     });
   };
 
-  //设置当前城市以及第一个城市的样式 及点击后切换为当前城市
-  var _resetCity = function() {
-    //清除已有的选中样式以及第一项样式
-    $('.time-line-item').removeClass('time-line-current').removeClass('time-line-first');
+  //切换当前城市
+  var _resetCurCity = function() {
+    //清除已有的选中样式
+    $('.time-line-item').removeClass('time-line-current');
     //设置新的选中日期
     $('.time-line-item:eq(' + _curDay + ')').addClass('time-line-current');
+  };
+
+  //设置当前城市以及第一个城市的样式 及点击后切换为当前城市
+  var _resetCity = function() {
+    _resetCurCity();
     //设置第一项的样式
     $('.time-line-item:eq(0)').addClass('time-line-first');
     _bandItem();

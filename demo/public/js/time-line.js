@@ -25,7 +25,7 @@ var timeLine = (function() {
           _dragging = false;
       });
       _firstDay--;
-      init();
+      _baseInit();
     }
   };
   //右侧按钮事件
@@ -39,7 +39,7 @@ var timeLine = (function() {
           _dragging = false;
       });
       _firstDay++;
-      init();
+      _baseInit();
     }
   };
 
@@ -86,7 +86,7 @@ var timeLine = (function() {
     _days++;
     _curDay = index + 1;
     _resetNextItemDate(index + 1);
-    init();
+    _baseInit();
   };
   //删除一天
   var delDay = function(index) {
@@ -99,7 +99,7 @@ var timeLine = (function() {
       _curDay = _days == 0 ? 0 : (_days - 1);
     }
     _resetNextItemDate(index - 1, true);
-    init();
+    _baseInit();
   };
 
   //初始化添加一天按钮
@@ -228,6 +228,16 @@ var timeLine = (function() {
     }
   };
 
+  //初始化基本页面代码
+  var _drawFrame = function() {
+    var _frameAry = ['<div class="drag-left"></div>',
+      '<div class="time-line-box">',
+        '<div class="time-line-inner clearfix"></div>',
+      '</div>',
+      '<div class="drag-right"></div>'];
+    $('.time-line').html(_frameAry.join(''));
+  };
+
   //初始化通用的基本设置
   var _baseInit = function() {
     _resizeInnerWidth();
@@ -248,6 +258,7 @@ var timeLine = (function() {
 
   //时间轴初始化
   var init = function(config) {
+    _drawFrame();
     _initConfig(config);
     _baseInit();
   };

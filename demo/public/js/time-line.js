@@ -107,7 +107,12 @@ var timeLine = (function() {
     $('.time-line-add').unbind('click').each(function(index, element) {
       $(element).click(function() {
         _insertDay(index);
-      })
+      });
+    });
+    $('.time-line-add').hover(function() {
+      $(this).find('.time-line-add-content').show();
+    }, function() {
+      $(this).find('.time-line-add-content').hide();
     });
   };
 

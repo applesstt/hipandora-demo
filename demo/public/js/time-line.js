@@ -109,7 +109,17 @@ var timeLine = (function() {
         _insertDay(index);
       });
     });
-    $('.time-line-add').hover(function() {
+    $('.time-line-add').unbind('mousemove').unbind('hover').mousemove(function(e) {
+      var contentLeft = e.pageX - $(this).offset().left - 11;
+      //console.log(contentLeft);
+      var addContent = $(this).find('.time-line-add-content');
+      addContent.css('left', contentLeft + 'px');
+      if(contentLeft < 0 || contentLeft > 142 - 22) {
+        addContent.hide();
+      } else {
+        addContent.show();
+      }
+    }).hover(function() {
       $(this).find('.time-line-add-content').show();
     }, function() {
       $(this).find('.time-line-add-content').hide();

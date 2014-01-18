@@ -39,6 +39,8 @@
   overflow: visible;
   float: left;
   cursor: pointer;
+  margin-left: 9px;
+  margin-right: 9px;
 }
 .time-line-first {
   margin-left: 50px;
@@ -94,11 +96,11 @@
 }
 
 .time-line-add {
-  width: 160px;
-  height: 20px;
+  width: 142px;
+  height: 94px;
   float: left;
   position: relative;
-  overflow: visible;
+  overflow: hidden;
   cursor: pointer;
 }
 .time-line-add-content {
@@ -107,6 +109,5 @@
   height: 89px;
   position: absolute;
   top: 5px;
-  left: 69px;
   display: none;
 }

@@ -94,7 +94,6 @@
 }
 
 .time-line-add {
-  background: none;
   width: 160px;
   height: 20px;
   float: left;
@@ -105,16 +104,8 @@
 .time-line-add-content {
   background: url(../image/time-line/add-content.png) no-repeat 50% 50%;
   width: 22px;
-  height: 75px;
+  height: 89px;
   position: absolute;
-  top: 20px;
+  top: 5px;
   left: 69px;
-  display: none;
-}
-
-.time-line-add:hover {
-  background: url(../image/time-line/add.png) no-repeat 50% 5px;
-}
-.time-line-add:hover .time-line-add-content {
-  display: block;
 }

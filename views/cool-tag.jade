@@ -1,0 +1,29 @@
+extends layout/layout
+
+block content
+  link(rel='stylesheet', href='public/vendor/selectize.js/selectize.css')
+  link(rel='stylesheet', href='public/css/cool-tag.css')
+  .wrap
+    .wrap-inner
+      .cool-tag
+        input#travel-tags.mt20(style='width:100%;', type='text')
+  script(src='public/vendor/selectize.js/selectize.js')
+  script(src='public/js/cool-tag.js')
+  script.
+    $(function() {
+      $('#travel-tags').selectize({
+          delimiter: ' ',
+          persist: false,
+          maxItems: 10,
+          create: function(input) {
+            return {
+              value: input
+            };
+          },
+          render: {
+            item: function(item, escape) {
+              return '<div class="item">' + item.value + '<span>---</span></div>';
+            }
+          }
+      });
+    });

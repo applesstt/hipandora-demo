@@ -14,3 +14,7 @@ exports.notice = function(req, res) {
 exports.timeLine = function(req, res) {
   res.render('time-line');
 };
+
+exports.coolTag = function(req, res) {
+  res.render('cool-tag');
+};

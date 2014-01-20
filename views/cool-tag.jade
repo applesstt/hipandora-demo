@@ -5,13 +5,28 @@ block content
   link(rel='stylesheet', href='public/css/cool-tag.css')
   .wrap
     .wrap-inner.mt20
-      .cool-tag-wrap
-        input#travel-tags(style='width:100%;', type='text')
+      #travel-tag.cool-tag-wrap
+        input.selectized(type='text')
+        .cool-tag-for.clearfix
+          .cool-tag-for-table 常用标签：
+          .cool-tag-for-content.clearfix
+            - for(var i = 0; i < 20; i++)
+              .cool-tag.cool-tag-default.clearfix
+                .cool-tag-left
+                .cool-tag-middle
+                  em 自驾游
+                .cool-tag-right
+              .cool-tag.cool-tag-disabled.clearfix
+                .cool-tag-left
+                .cool-tag-middle
+                  em 自驾游
+                .cool-tag-right
+
   script(src='public/vendor/selectize.js/dist/js/standalone/selectize.js')
   script(src='public/js/cool-tag.js')
   script.
     $(function() {
-      coolSelectize = $('#travel-tags').selectize({
+      var coolSelectize = $('.selectized').selectize({
           delimiter: ' ',
           persist: false,
           maxItems: 10,
@@ -22,14 +37,14 @@ block content
             };
           },
           onItemAdd: function(value) {
-            console.log(value);
+            initTagFor(value, true);
           },
           onItemRemove: function(value) {
-            console.log(value);
+            initTagFor(value, false);
           },
           render: {
             item: function(item, escape) {
-              return '<div class="cool-tag clearfix">' +
+              return '<div class="cool-tag cool-tag-del clearfix">' +
                 '<div class="cool-tag-left"></div>' +
                 '<div class="cool-tag-middle">' +
                   item.value +
@@ -39,11 +54,23 @@ block content
             }
           }
       });
-      coolSelectize[0].selectize.addOption({value: 'hello'});
-      coolSelectize[0].selectize.addItem('hello');
-      //coolSelectize[0].selectize.updateOption('hello', {value: 'hello'});
-      //coolSelectize[0].selectize.createItem('hello');
-      //coolSelectize[0].selectize.addItem('hello');
-      //coolSelectize[0].selectize.refreshOptions();
+      var initTagFor = function(value, addFlag) {
+        $('.cool-tag-middle em').unbind('click').each(function() {
+          if($(this).html() == value) {
+            if(addFlag) {
+              $(this).parent().parent().removeClass('cool-tag-default').addClass('cool-tag-disabled');
+            } else {
+              $(this).parent().parent().removeClass('cool-tag-disabled').addClass('cool-tag-default');
+            }
+          }
+        });
+        $('.cool-tag-default .cool-tag-middle em').click(function() {
+          var value = $(this).html();
+          $(this).parent().parent().removeClass('cool-tag-default').addClass('cool-tag-disabled');
+          coolSelectize[0].selectize.addOption({value: value});
+          coolSelectize[0].selectize.addItem(value);
+        });
+      };
+      initTagFor();
       $('.selectize-input input:first').attr('placeholder', '点击空白处输入标签');
     });

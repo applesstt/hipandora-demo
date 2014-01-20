@@ -30,8 +30,16 @@
   background: none;
   right: 2px;
 }
+.cool-tag-wrap {
+  width: 556px;
+}
 .cool-tag {
   float: left;
+  margin-right: 5px;
+  margin-bottom: 5px;
+}
+.cool-tag-del {
+  margin-bottom: 0;
 }
 .cool-tag-left {
   background: url(../image/cool-tag/left.png) no-repeat 0 0;
@@ -44,11 +52,41 @@
   height: 22px;
   line-height: 22px;
   float: left;
+}
+.cool-tag-del .cool-tag-middle {
   padding-right: 9px;
+}
+.cool-tag-default .cool-tag-middle em,
+.cool-tag-disabled .cool-tag-middle em {
+  font-style: normal;
+  height: 22px;
+  line-height: 22px;
+  background: url(../image/cool-tag/add.png) no-repeat 0 50%;
+  padding-left: 12px;
+  display: block;
+  cursor: pointer;
+  color: #303030;
+}
+.cool-tag-disabled .cool-tag-middle em {
+  background: url(../image/cool-tag/gray.png) no-repeat 0 50%;
+  color: #999999;
 }
 .cool-tag-right {
   background: url(../image/cool-tag/right.png) no-repeat 0 0;
   width: 11px;
   height: 22px;
   float: left;
+}
+
+.cool-tag-for {
+  margin-top: 3px;
+}
+.cool-tag-for-table {
+  float: left;
+  line-height: 22px;
+  margin-right: 5px;
+}
+.cool-tag-for-content {
+  float: left;
+  width: 487px;
 }

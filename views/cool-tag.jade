@@ -11,7 +11,7 @@ block content
   script(src='public/js/cool-tag.js')
   script.
     $(function() {
-      var coolSelectize = $('#travel-tags').selectize({
+      coolSelectize = $('#travel-tags').selectize({
           delimiter: ' ',
           persist: false,
           maxItems: 10,
@@ -39,5 +39,11 @@ block content
             }
           }
       });
+      coolSelectize[0].selectize.addOption({value: 'hello'});
+      coolSelectize[0].selectize.addItem('hello');
+      //coolSelectize[0].selectize.updateOption('hello', {value: 'hello'});
+      //coolSelectize[0].selectize.createItem('hello');
+      //coolSelectize[0].selectize.addItem('hello');
+      //coolSelectize[0].selectize.refreshOptions();
       $('.selectize-input input:first').attr('placeholder', '点击空白处输入标签');
     });

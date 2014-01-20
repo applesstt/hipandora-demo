@@ -1,15 +1,119 @@
+/**
+ * Determines if the provided value has been defined.
+ *
+ * @param {mixed} object
+ * @returns {boolean}
+ */
 var isset = function(object) {
 	return typeof object !== 'undefined';
 };
 
-var htmlEntities = function(str) {
-	return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+/**
+ * Converts a scalar to its best string representation
+ * for hash keys and HTML attribute values.
+ *
+ * Transformations:
+ *   'str'     -> 'str'
+ *   null      -> ''
+ *   undefined -> ''
+ *   true      -> '1'
+ *   false     -> '0'
+ *   0         -> '0'
+ *   1         -> '1'
+ *
+ * @param {string} value
+ * @returns {string}
+ */
+var hash_key = function(value) {
+	if (typeof value === 'undefined' || value === null) return '';
+	if (typeof value === 'boolean') return value ? '1' : '0';
+	return value + '';
 };
 
-var quoteRegExp = function(str) {
-	return (str + '').replace(/([.?*+^$[\]\\(){}|-])/g, '\\$1');
+/**
+ * Escapes a string for use within HTML.
+ *
+ * @param {string} str
+ * @returns {string}
+ */
+var escape_html = function(str) {
+	return (str + '')
+		.replace(/&/g, '&amp;')
+		.replace(/</g, '&lt;')
+		.replace(/>/g, '&gt;')
+		.replace(/"/g, '&quot;');
 };
 
+/**
+ * Escapes "$" characters in replacement strings.
+ *
+ * @param {string} str
+ * @returns {string}
+ */
+var escape_replace = function(str) {
+	return (str + '').replace(/\$/g, '$$$$');
+};
+
+var hook = {};
+
+/**
+ * Wraps `method` on `self` so that `fn`
+ * is invoked before the original method.
+ *
+ * @param {object} self
+ * @param {string} method
+ * @param {function} fn
+ */
+hook.before = function(self, method, fn) {
+	var original = self[method];
+	self[method] = function() {
+		fn.apply(self, arguments);
+		return original.apply(self, arguments);
+	};
+};
+
+/**
+ * Wraps `method` on `self` so that `fn`
+ * is invoked after the original method.
+ *
+ * @param {object} self
+ * @param {string} method
+ * @param {function} fn
+ */
+hook.after = function(self, method, fn) {
+	var original = self[method];
+	self[method] = function() {
+		var result = original.apply(self, arguments);
+		fn.apply(self, arguments);
+		return result;
+	};
+};
+
+/**
+ * Builds a hash table out of an array of
+ * objects, using the specified `key` within
+ * each object.
+ *
+ * @param {string} key
+ * @param {mixed} objects
+ */
+var build_hash_table = function(key, objects) {
+	if (!$.isArray(objects)) return objects;
+	var i, n, table = {};
+	for (i = 0, n = objects.length; i < n; i++) {
+		if (objects[i].hasOwnProperty(key)) {
+			table[objects[i][key]] = objects[i];
+		}
+	}
+	return table;
+};
+
+/**
+ * Wraps `fn` so that it can only be invoked once.
+ *
+ * @param {function} fn
+ * @returns {function}
+ */
 var once = function(fn) {
 	var called = false;
 	return function() {
@@ -19,6 +123,14 @@ var once = function(fn) {
 	};
 };
 
+/**
+ * Wraps `fn` so that it can only be called once
+ * every `delay` milliseconds (invoked on the falling edge).
+ *
+ * @param {function} fn
+ * @param {int} delay
+ * @returns {function}
+ */
 var debounce = function(fn, delay) {
 	var timeout;
 	return function() {
@@ -46,7 +158,12 @@ var debounce_events = function(self, types, fn) {
 
 	// override trigger method
 	self.trigger = function() {
-		event_args[arguments[0]] = arguments;
+		var type = arguments[0];
+		if (types.indexOf(type) !== -1) {
+			event_args[type] = arguments;
+		} else {
+			return trigger.apply(self, arguments);
+		}
 	};
 
 	// invoke provided function
@@ -80,6 +197,15 @@ var watchChildEvent = function($parent, event, selector, fn) {
 	});
 };
 
+/**
+ * Determines the current selection within a text input control.
+ * Returns an object containing:
+ *   - start
+ *   - length
+ *
+ * @param {object} input
+ * @returns {object}
+ */
 var getSelection = function(input) {
 	var result = {};
 	if ('selectionStart' in input) {
@@ -96,19 +222,33 @@ var getSelection = function(input) {
 	return result;
 };
 
+/**
+ * Copies CSS properties from one element to another.
+ *
+ * @param {object} $from
+ * @param {object} $to
+ * @param {array} properties
+ */
 var transferStyles = function($from, $to, properties) {
-	var styles = {};
+	var i, n, styles = {};
 	if (properties) {
-		for (var i = 0; i < properties.length; i++) {
+		for (i = 0, n = properties.length; i < n; i++) {
 			styles[properties[i]] = $from.css(properties[i]);
 		}
 	} else {
 		styles = $from.css();
 	}
 	$to.css(styles);
-	return $to;
 };
 
+/**
+ * Measures the width of a string within a
+ * parent element (in pixels).
+ *
+ * @param {string} str
+ * @param {object} $parent
+ * @returns {int}
+ */
 var measureString = function(str, $parent) {
 	var $test = $('<test>').css({
 		position: 'absolute',
@@ -116,7 +256,7 @@ var measureString = function(str, $parent) {
 		left: -99999,
 		width: 'auto',
 		padding: 0,
-		whiteSpace: 'nowrap'
+		whiteSpace: 'pre'
 	}).text(str).appendTo('body');
 
 	transferStyles($parent, $test, [
@@ -133,13 +273,24 @@ var measureString = function(str, $parent) {
 	return width;
 };
 
+/**
+ * Sets up an input to grow horizontally as the user
+ * types. If the value is changed manually, you can
+ * trigger the "update" handler to resize:
+ *
+ * $input.trigger('update');
+ *
+ * @param {object} $input
+ */
 var autoGrow = function($input) {
 	var update = function(e) {
 		var value, keyCode, printable, placeholder, width;
-		var shift, character;
-
-		if ($input.data('grow') === false) return;
+		var shift, character, selection;
 		e = e || window.event || {};
+
+		if (e.metaKey || e.altKey) return;
+		if ($input.data('grow') === false) return;
+
 		value = $input.val();
 		if (e.type && e.type.toLowerCase() === 'keydown') {
 			keyCode = e.keyCode;
@@ -147,10 +298,19 @@ var autoGrow = function($input) {
 				(keyCode >= 97 && keyCode <= 122) || // a-z
 				(keyCode >= 65 && keyCode <= 90)  || // A-Z
 				(keyCode >= 48 && keyCode <= 57)  || // 0-9
-				keyCode == 32 // space
+				keyCode === 32 // space
 			);
 
-			if (printable) {
+			if (keyCode === KEY_DELETE || keyCode === KEY_BACKSPACE) {
+				selection = getSelection($input[0]);
+				if (selection.length) {
+					value = value.substring(0, selection.start) + value.substring(selection.start + selection.length);
+				} else if (keyCode === KEY_BACKSPACE && selection.start) {
+					value = value.substring(0, selection.start - 1) + value.substring(selection.start + 1);
+				} else if (keyCode === KEY_DELETE && typeof selection.start !== 'undefined') {
+					value = value.substring(0, selection.start) + value.substring(selection.start + 1);
+				}
+			} else if (printable) {
 				shift = e.shiftKey;
 				character = String.fromCharCode(e.keyCode);
 				if (shift) character = character.toUpperCase();

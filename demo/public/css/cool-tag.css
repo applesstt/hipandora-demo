@@ -8,8 +8,27 @@
 .cool-tag-wrap .selectize-dropdown, .selectize-input, .selectize-input input {
   line-height: 22px;
 }
-.cool-tag-wrap .selectize-control.multi .selectize-input > div {
+.cool-tag-wrap .selectize-control.multi .selectize-input > div,
+.cool-tag-wrap .selectize-control.plugin-remove_button [data-value]{
   padding: 0;
+  padding-right: 0 !important;
+  margin: 0 3px 0 0;
+  background: none;
+}
+.cool-tag-wrap .selectize-control.multi .selectize-input.has-items,
+.cool-tag-wrap .selectize-input {
+  padding: 4px 8px;
+  border-radius: 0;
+}
+.cool-tag-wrap .selectize-input > input {
+  min-width: 120px;
+}
+.cool-tag-wrap .selectize-control.plugin-remove_button [data-value] .remove,
+.cool-tag-wrap .selectize-control.plugin-remove_button [data-value] .remove:hover {
+  border-left: none;
+  padding: 0;
+  background: none;
+  right: 2px;
 }
 .cool-tag {
   float: left;
@@ -23,18 +42,13 @@
 .cool-tag-middle {
   background: url(../image/cool-tag/middle.png) repeat-x 0 0;
   height: 22px;
+  line-height: 22px;
   float: left;
+  padding-right: 9px;
 }
 .cool-tag-right {
   background: url(../image/cool-tag/right.png) no-repeat 0 0;
   width: 11px;
   height: 22px;
   float: left;
-}
-.cool-tag-del {
-  background: url(../image/cool-tag/del.png) no-repeat 100% 50%;
-  height: 22px;
-  line-height: 22px;
-  padding-right: 12px;
-  color: #333333;
 }

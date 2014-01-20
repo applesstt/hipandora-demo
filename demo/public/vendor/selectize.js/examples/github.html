@@ -8,14 +8,13 @@
 		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 		<title>Selectize.js Demo</title>
 		<meta name="description" content="">
-		<meta name="viewport" content="width=device-width">
-		<link rel="stylesheet" href="_normalize.css">
-		<link rel="stylesheet" href="_stylesheet.css">
-		<link rel="stylesheet" href="../selectize.css">
-		<!--[if IE 8]><script src="_es5.js"></script><![endif]-->
-		<script src="_jquery.js"></script>
-		<script src="../selectize.js"></script>
-		<script src="_demos.js"></script>
+		<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+		<link rel="stylesheet" href="css/normalize.css">
+		<link rel="stylesheet" href="css/stylesheet.css">
+		<!--[if IE 8]><script src="js/es5.js"></script><![endif]-->
+		<script src="js/jquery.js"></script>
+		<script src="../dist/js/standalone/selectize.js"></script>
+		<script src="js/index.js"></script>
 		<style type="text/css">
 		.selectize-control.repositories .selectize-dropdown > div {
 			border-bottom: 1px solid rgba(0,0,0,0.05);
@@ -113,17 +112,17 @@
 					options: [],
 					create: false,
 					render: {
-						option: function(item) {
+						option: function(item, escape) {
 							return '<div>' +
 								'<span class="title">' +
-									'<span class="name"><i class="icon ' + (item.fork ? 'fork' : 'source') + '"></i>' + item.name + '</span>' +
-									'<span class="by">' + item.username + '</span>' +
+									'<span class="name"><i class="icon ' + (item.fork ? 'fork' : 'source') + '"></i>' + escape(item.name) + '</span>' +
+									'<span class="by">' + escape(item.username) + '</span>' +
 								'</span>' +
-								'<span class="description">' + item.description + '</span>' +
+								'<span class="description">' + escape(item.description) + '</span>' +
 								'<ul class="meta">' +
-									(item.language ? '<li class="language">' + item.language + '</li>' : '') +
-									'<li class="watchers"><span>' + item.watchers + '</span> watchers</li>' +
-									'<li class="forks"><span>' + item.forks + '</span> forks</li>' +
+									(item.language ? '<li class="language">' + escape(item.language) + '</li>' : '') +
+									'<li class="watchers"><span>' + escape(item.watchers) + '</span> watchers</li>' +
+									'<li class="forks"><span>' + escape(item.forks) + '</span> forks</li>' +
 								'</ul>' +
 							'</div>';
 						}

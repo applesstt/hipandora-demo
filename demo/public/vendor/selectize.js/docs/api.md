@@ -13,6 +13,11 @@ var $select = $('select').selectize(options);
 var selectize = $select[0].selectize;
 ```
 
+#### Related Topics
+
+- [Event Documentation](events.md)
+- [Developing Plugins](plugins.md)
+
 ### Methods
 
 <table width="100%">
@@ -24,7 +29,7 @@ var selectize = $select[0].selectize;
 		<th valign="top" align="left">Description</th>
 	</tr>
 	<tr>
-		<td valign="top"><code>addOption(value, data)</code></td>
+		<td valign="top"><code>addOption(data)</code></td>
 		<td valign="top">Adds an available option. If it already exists, nothing will happen. Note: this does not refresh the options list dropdown (use refreshOptions() for that).</td>
 	</tr>
 	<tr>
@@ -36,8 +41,16 @@ var selectize = $select[0].selectize;
 		<td valign="top">Removes the option identified by the given value.</td>
 	</tr>
 	<tr>
+		<td valign="top"><code>clearOptions()</code></td>
+		<td valign="top">Removes all options from the control.</td>
+	</tr>
+	<tr>
 		<td valign="top"><code>getOption(value)</code></td>
-		<td valign="top">Retrieves the data for the option identified by the given value.</td>
+		<td valign="top">Retrieves the jQuery element for the option identified by the given value.</td>
+	</tr>
+	<tr>
+		<td valign="top"><code>getAdjacentOption(value, direction)</code></td>
+		<td valign="top">Retrieves the jQuery element for the previous or next option, relative to the currently highlighted option. The "direction" argument should be 1 for "next" or -1 for "previous".</td>
 	</tr>
 	<tr>
 		<td valign="top"><code>refreshOptions(triggerDropdown)</code></td>
@@ -75,15 +88,38 @@ var selectize = $select[0].selectize;
 		<td valign="top">Re-renders the selected item lists.</td>
 	</tr>
 	<tr>
-		<th valign="top" colspan="3" align="left"><a href="#methods_search" name="methods_search">Search</a></th>
+		<th valign="top" colspan="3" align="left"><a href="#methods_items" name="methods_optgroups">Optgroups</a></th>
 	</tr>
 	<tr>
 		<th valign="top" width="120px" align="left">Method</th>
 		<th valign="top" align="left">Description</th>
 	</tr>
 	<tr>
-		<td valign="top"><code>getScoreFunction(search)</code></td>
-		<td valign="top">Returns a function for scoring individual options. This should only be used within the "score" callback provided in the options. Returns a float.</td>
+		<td valign="top"><code>addOptionGroup(id, data)</code></td>
+		<td valign="top">Registers a new optgroup for options to be bucketed into. The "id" argument refers to a value of the property in option identified by the "optgroupField" setting.</td>
+	</tr>
+	<tr>
+		<th valign="top" colspan="3" align="left"><a href="#methods_events" name="methods_events">Events</a></th>
+	</tr>
+	<tr>
+		<th valign="top" width="120px" align="left">Method</th>
+		<th valign="top" align="left">Description</th>
+	</tr>
+	<tr>
+		<td valign="top"><code>on(event, handler)</code></td>
+		<td valign="top">Adds an event listener.</td>
+	</tr>
+	<tr>
+		<td valign="top"><code>off(event, handler)</code></td>
+		<td valign="top">Removes an event listener.</td>
+	</tr>
+	<tr>
+		<td valign="top"><code>off(event)</code></td>
+		<td valign="top">Removes all event listeners.</td>
+	</tr>
+	<tr>
+		<td valign="top"><code>trigger(event, ...)</code></td>
+		<td valign="top">Triggers event listeners.</td>
 	</tr>
 	<tr>
 		<th valign="top" colspan="3" align="left"><a href="#methods_dropdown" name="methods_dropdown">Dropdown</a></th>
@@ -112,6 +148,14 @@ var selectize = $select[0].selectize;
 		<th valign="top" align="left">Description</th>
 	</tr>
 	<tr>
+		<td valign="top"><code>destroy()</code></td>
+		<td valign="top">Destroys the control and unbinds event listeners so that it can be garbage collected.</td>
+	</tr>
+	<tr>
+		<td valign="top"><code>load(fn)</code></td>
+		<td valign="top">Loads options by invoking the the provided function. The function should accept one argument (callback) and invoke the callback with the results once they are available.</td>
+	</tr>
+	<tr>
 		<td valign="top"><code>focus()</code></td>
 		<td valign="top">Brings the control into focus.</td>
 	</tr>
@@ -121,11 +165,19 @@ var selectize = $select[0].selectize;
 	</tr>
 	<tr>
 		<td valign="top"><code>lock()</code></td>
-		<td valign="top">Disables user input on the control.</td>
+		<td valign="top">Disables user input on the control (note: the control can still receive focus).</td>
 	</tr>
 	<tr>
 		<td valign="top"><code>unlock()</code></td>
 		<td valign="top">Re-enables user input on the control.</td>
+	</tr>
+	<tr>
+		<td valign="top"><code>disable()</code></td>
+		<td valign="top">Disables user input on the control completely. While disabled, it cannot receive focus.</td>
+	</tr>
+	<tr>
+		<td valign="top"><code>enable()</code></td>
+		<td valign="top">Enables the control so that it can respond to focus and user input.</td>
 	</tr>
 	<tr>
 		<td valign="top"><code>getValue()</code></td>
@@ -156,6 +208,11 @@ var selectize = $select[0].selectize;
 		<th valign="top" width="60px" align="left">Type</th>
 	</tr>
 	<tr>
+		<td valign="top"><code>options</code></td>
+		<td valign="top">Original search options.</td>
+		<td valign="top"><code>object</code></td>
+	</tr>
+	<tr>
 		<td valign="top"><code>query</code></td>
 		<td valign="top">The raw user input.</td>
 		<td valign="top"><code>string</code></td>
@@ -172,7 +229,7 @@ var selectize = $select[0].selectize;
 	</tr>
 	<tr>
 		<td valign="top"><code>items</code></td>
-		<td valign="top">A list of matched results. Each result is an object containing two properties: "score" and "value".</td>
+		<td valign="top">A list of matched results. Each result is an object containing two properties: "score" and "id".</td>
 		<td valign="top"><code>array</code></td>
 	</tr>
 </table>

@@ -12,12 +12,12 @@
 .cool-tag-wrap .selectize-control.plugin-remove_button [data-value]{
   padding: 0;
   padding-right: 0 !important;
-  margin: 0 8px 0 0;
+  margin: 0 8px 3px 0;
   background: none;
 }
 .cool-tag-wrap .selectize-control.multi .selectize-input.has-items,
 .cool-tag-wrap .selectize-input {
-  padding: 4px 8px;
+  padding: 4px 8px 1px;
   border-radius: 0;
 }
 .cool-tag-wrap .selectize-input > input {

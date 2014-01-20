@@ -12,7 +12,7 @@
 .cool-tag-wrap .selectize-control.plugin-remove_button [data-value]{
   padding: 0;
   padding-right: 0 !important;
-  margin: 0 3px 0 0;
+  margin: 0 8px 0 0;
   background: none;
 }
 .cool-tag-wrap .selectize-control.multi .selectize-input.has-items,
@@ -35,7 +35,7 @@
 }
 .cool-tag {
   float: left;
-  margin-right: 5px;
+  margin-right: 8px;
   margin-bottom: 5px;
 }
 .cool-tag-del {

@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+    <link rel="stylesheet" href="public/css/common.css">
+    <link rel="stylesheet" href="public/css/pager.css">
+    <link rel="stylesheet" href="public/css/account-tip.css">
+    <link rel="stylesheet" href="public/vendor/tooltipster/css/tooltipster.css">
+    <link rel="stylesheet" href="public/vendor/tooltipster/css/themes/tooltipster-shadow.css">
+    <script src="public/js/jquery-1.10.1.min.js"></script>
+    <script src="public/vendor/tooltipster/js/jquery.tooltipster.js"></script>
+  </head>
+  <body>
+    <link rel="stylesheet" href="public/vendor/selectize.js/dist/css/selectize.css">
+    <link rel="stylesheet" href="public/css/cool-tag.css">
+    <div class="wrap">
+      <div class="wrap-inner">
+        <div class="mt20">
+          <div id="travel-tag" class="cool-tag-wrap">
+            <input type="text" class="selectized">
+            <div class="cool-tag-for clearfix">
+              <div class="cool-tag-for-table">常用标签：</div>
+              <div class="cool-tag-for-content clearfix"></div>
+            </div>
+          </div>
+        </div>
+        <div class="mt20">
+          <div id="line-tag" class="cool-tag-wrap">
+            <input type="text" class="selectized">
+            <div class="cool-tag-for clearfix">
+              <div class="cool-tag-for-table">常用标签：</div>
+              <div class="cool-tag-for-content clearfix"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script src="public/vendor/selectize.js/dist/js/standalone/selectize.js"></script>
+    <script src="public/js/cool-tag.js"></script>
+    <script>
+      $(function() {
+        (new CoolTag()).init({
+          find: '#travel-tag',
+          normalTags: '人文 自然 海岛 度假 艺术 摄影 博物馆 历史遗迹',
+          selTags: '人文 自然 历史'
+        });
+        
+        (new CoolTag()).init({
+          find: '#line-tag',
+          normalTags: '自驾游 亲子游 蜜月游',
+          selTags: '自驾游'
+        });
+      });
+    </script>
+  </body>
+</html>

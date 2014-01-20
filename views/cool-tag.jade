@@ -4,73 +4,32 @@ block content
   link(rel='stylesheet', href='public/vendor/selectize.js/dist/css/selectize.css')
   link(rel='stylesheet', href='public/css/cool-tag.css')
   .wrap
-    .wrap-inner.mt20
-      #travel-tag.cool-tag-wrap
-        input.selectized(type='text')
-        .cool-tag-for.clearfix
-          .cool-tag-for-table 常用标签：
-          .cool-tag-for-content.clearfix
-            - for(var i = 0; i < 20; i++)
-              .cool-tag.cool-tag-default.clearfix
-                .cool-tag-left
-                .cool-tag-middle
-                  em 自驾游
-                .cool-tag-right
-              .cool-tag.cool-tag-disabled.clearfix
-                .cool-tag-left
-                .cool-tag-middle
-                  em 自驾游
-                .cool-tag-right
-
+    .wrap-inner
+      .mt20
+        #travel-tag.cool-tag-wrap
+          input.selectized(type='text')
+          .cool-tag-for.clearfix
+            .cool-tag-for-table 常用标签：
+            .cool-tag-for-content.clearfix
+      .mt20
+        #line-tag.cool-tag-wrap
+          input.selectized(type='text')
+          .cool-tag-for.clearfix
+            .cool-tag-for-table 常用标签：
+            .cool-tag-for-content.clearfix
   script(src='public/vendor/selectize.js/dist/js/standalone/selectize.js')
   script(src='public/js/cool-tag.js')
   script.
     $(function() {
-      var coolSelectize = $('.selectized').selectize({
-          delimiter: ' ',
-          persist: false,
-          maxItems: 10,
-          plugins: ['remove_button'],
-          create: function(input) {
-            return {
-              value: input
-            };
-          },
-          onItemAdd: function(value) {
-            initTagFor(value, true);
-          },
-          onItemRemove: function(value) {
-            initTagFor(value, false);
-          },
-          render: {
-            item: function(item, escape) {
-              return '<div class="cool-tag cool-tag-del clearfix">' +
-                '<div class="cool-tag-left"></div>' +
-                '<div class="cool-tag-middle">' +
-                  item.value +
-                '</div>' +
-                '<div class="cool-tag-right"></div>' +
-              '</div>';
-            }
-          }
+      (new CoolTag()).init({
+        find: '#travel-tag',
+        normalTags: '人文 自然 海岛 度假 艺术 摄影 博物馆 历史遗迹',
+        selTags: '人文 自然 历史'
       });
-      var initTagFor = function(value, addFlag) {
-        $('.cool-tag-middle em').unbind('click').each(function() {
-          if($(this).html() == value) {
-            if(addFlag) {
-              $(this).parent().parent().removeClass('cool-tag-default').addClass('cool-tag-disabled');
-            } else {
-              $(this).parent().parent().removeClass('cool-tag-disabled').addClass('cool-tag-default');
-            }
-          }
-        });
-        $('.cool-tag-default .cool-tag-middle em').click(function() {
-          var value = $(this).html();
-          $(this).parent().parent().removeClass('cool-tag-default').addClass('cool-tag-disabled');
-          coolSelectize[0].selectize.addOption({value: value});
-          coolSelectize[0].selectize.addItem(value);
-        });
-      };
-      initTagFor();
-      $('.selectize-input input:first').attr('placeholder', '点击空白处输入标签');
+
+      (new CoolTag()).init({
+        find: '#line-tag',
+        normalTags: '自驾游 亲子游 蜜月游',
+        selTags: '自驾游'
+      });
     });

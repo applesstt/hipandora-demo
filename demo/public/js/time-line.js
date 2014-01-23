@@ -1,9 +1,8 @@
 var timeLine = (function() {
   var _firstDay = 0, _days = 0, _curDay = 0;
-  var _dragging = false;
+  var _dragging = false, _hasResetCurDay = false;
 
   //设置当前天
-  var _setCurDay = function() {};
   var _resetDragBtn = function() {
     $('.drag-left').unbind('click').click(function() {
       _dragLeft();
@@ -85,6 +84,7 @@ var timeLine = (function() {
     insertDayCallback(index + 1);
     _days++;
     _curDay = index + 1;
+    _hasResetCurDay = true;
     _resetNextItemDate(index + 1);
     _baseInit();
   };
@@ -97,6 +97,9 @@ var timeLine = (function() {
     //如果当前选中时间是最後一天 删除一个时间点后 调整选中时间前移
     if(_curDay + 1 > _days) {
       _curDay = _days == 0 ? 0 : (_days - 1);
+    }
+    if(_curDay === index) {
+      _hasResetCurDay = true;
     }
     _resetNextItemDate(index - 1, true);
     _baseInit();
@@ -111,7 +114,6 @@ var timeLine = (function() {
     });
     $('.time-line-add').unbind('mousemove').unbind('hover').mousemove(function(e) {
       var contentLeft = e.pageX - $(this).offset().left - 11;
-      //console.log(contentLeft);
       var addContent = $(this).find('.time-line-add-content');
       addContent.css('left', contentLeft + 'px');
       if(contentLeft < 0 || contentLeft > 142 - 22) {
@@ -201,6 +203,9 @@ var timeLine = (function() {
       $(_item).data('index', index + 1).data('showDate', _showDate).data('date', _date);
       //绑定item的click事件 click后切换为选中的item
       $(_item).unbind('click').click(function() {
+        if(_curDay !== index) {
+          _hasResetCurDay = true;
+        }
         _curDay = index;
         _resetCurCity();
       });
@@ -219,6 +224,10 @@ var timeLine = (function() {
     $('.time-line-item').removeClass('time-line-current');
     //设置新的选中日期
     $('.time-line-item:eq(' + _curDay + ')').addClass('time-line-current');
+    if(_hasResetCurDay) {
+      _hasResetCurDay = false;
+      setCurDayCallback(_curDay);
+    }
   };
 
   //设置当前城市以及第一个城市的样式 及点击后切换为当前城市
@@ -240,6 +249,9 @@ var timeLine = (function() {
     }
     if(typeof config.delDayCallback === 'function') {
       delDayCallback = config.delDayCallback;
+    }
+    if(typeof config.setCurDayCallback === 'function') {
+      setCurDayCallback = config.setCurDayCallback;
     }
   };
 
@@ -264,6 +276,7 @@ var timeLine = (function() {
 
   var insertDayCallback = function() {};
   var delDayCallback = function() {};
+  var setCurDayCallback = function() {};
 
   //设置或修改某日的城市名称
   var setCityName = function(index, cityName) {

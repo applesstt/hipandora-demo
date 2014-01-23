@@ -87,6 +87,9 @@ var timeLine = (function() {
     _hasResetCurDay = true;
     _resetNextItemDate(index + 1);
     _baseInit();
+    if(index - _firstDay === 4) {
+      _dragRight();
+    }
   };
   //删除一天
   var delDay = function(index) {

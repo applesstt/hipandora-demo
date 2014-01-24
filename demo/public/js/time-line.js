@@ -58,7 +58,10 @@ var timeLine = (function() {
       '</div>',
     '</div>',
     '<div class="time-line-add">',
-      '<div class="time-line-add-content"></div>',
+      '<div class="time-line-add-inner">',
+        '<div class="time-line-add-icon"></div>',
+        '<div class="time-line-add-content"></div>',
+      '</div>',
     '</div>'].join('');
   };
 
@@ -110,24 +113,26 @@ var timeLine = (function() {
 
   //初始化添加一天按钮
   var _initAddFun = function() {
-    $('.time-line-add').unbind('click').each(function(index, element) {
+    $('.time-line-add-icon').unbind('click').each(function(index, element) {
       $(element).click(function() {
         _insertDay(index);
       });
     });
     $('.time-line-add').unbind('mousemove').unbind('hover').mousemove(function(e) {
       var contentLeft = e.pageX - $(this).offset().left - 11;
-      var addContent = $(this).find('.time-line-add-content');
+      var addContent = $(this).find('.time-line-add-inner');
       addContent.css('left', contentLeft + 'px');
-      if(contentLeft < 0 || contentLeft > 142 - 22) {
+      var top = e.pageY - $(this).offset().top - 5 - 2 - 11;
+      //判断如果贴近城市 或者鼠标划出+图标区域是 隐藏添加一天区域
+      if(contentLeft < 0 || contentLeft > 142 - 22 || top > 0) {
         addContent.hide();
       } else {
         addContent.show();
       }
     }).hover(function() {
-      $(this).find('.time-line-add-content').show();
+      $(this).find('.time-line-add-inner').show();
     }, function() {
-      $(this).find('.time-line-add-content').hide();
+      $(this).find('.time-line-add-inner').hide();
     });
   };
 

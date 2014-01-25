@@ -60,19 +60,17 @@
         day: 6,
         city: '北京'
       }]
-      $(function() {
-        timeLine.init({
-          data: cityData,
-          insertDayCallback: function(index) {
-            console.log('insert day callback index: ' + index);
-          },
-          delDayCallback: function(index) {
-            console.log('del day callback index: ' + index);
-          },
-          setCurDayCallback: function(index) {
-            console.log('set current day callback index: ' + index);
-          }
-        });
+      timeLine.init({
+        data: cityData,
+        insertDayCallback: function(index) {
+          console.log('insert day callback index: ' + index);
+        },
+        delDayCallback: function(index) {
+          console.log('del day callback index: ' + index);
+        },
+        setCurDayCallback: function(index) {
+          console.log('set current day callback index: ' + index);
+        }
       });
     </script>
   </body>

@@ -28,12 +28,14 @@ var timeLine = (function() {
     }
   };
   //右侧按钮事件
-  var _dragRight = function() {
+  var _dragRight = function(step) {
+    var step = typeof step === 'undefined' ? 1 : step;
+    var len = step * 177;
     if(_firstDay + 5 < _days) {
       if(_dragging) return;
       _dragging = true;
       $('.time-line-inner').animate({
-        left: '-=177'
+        left: '-=' + len
       }, function() {
           _dragging = false;
       });
@@ -90,8 +92,8 @@ var timeLine = (function() {
     _hasResetCurDay = true;
     _resetNextItemDate(index + 1);
     _baseInit();
-    if(index - _firstDay === 4) {
-      _dragRight();
+    if(index - _firstDay >= 4) {
+      _dragRight(index - _firstDay - 3);
     }
   };
   //删除一天
@@ -301,6 +303,7 @@ var timeLine = (function() {
   return {
     init: init,
     delDay: delDay,
-    setCityName: setCityName
+    setCityName: setCityName,
+    insertDay: _insertDay
   }
 }).call(this)

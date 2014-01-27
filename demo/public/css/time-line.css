@@ -4,17 +4,18 @@
 
 .drag-left, .drag-right {
   width: 30px;
-  height: 151px;
+  height: 20px;
+  margin-top: 56px;
   float: left;
   cursor: pointer;
   display: block;
   visibility: hidden;
 }
 .drag-left {
-  background: url(../image/time-line/left-btn.png) no-repeat 50% 56px;
+  background: url(../image/time-line/left-btn.png) no-repeat 50% 50%;
 }
 .drag-right {
-  background: url(../image/time-line/right-btn.png) no-repeat 50% 56px;
+  background: url(../image/time-line/right-btn.png) no-repeat 50% 50%;
 }
 
 .time-line-box {

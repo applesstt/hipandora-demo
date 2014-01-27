@@ -11,7 +11,7 @@ var timeLine = (function() {
       _dragRight();
     });
     $('.drag-left').css('visibility', (_firstDay == 0 ? 'hidden' : 'visible'));
-    $('.drag-right').css('visibility', (_firstDay + 5 == _days ? 'hidden' : 'visible'));
+    $('.drag-right').css('visibility', (_firstDay + 5 >= _days ? 'hidden' : 'visible'));
   };
   //左侧按钮事件
   var _dragLeft = function() {
@@ -105,6 +105,9 @@ var timeLine = (function() {
     //如果当前选中时间是最後一天 删除一个时间点后 调整选中时间前移
     if(_curDay + 1 > _days) {
       _curDay = _days == 0 ? 0 : (_days - 1);
+    }
+    if(index == _days && _days >= 5) {
+      _dragLeft();
     }
     if(_curDay === index) {
       _hasResetCurDay = true;

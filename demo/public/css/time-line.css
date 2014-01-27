@@ -4,7 +4,7 @@
 
 .drag-left, .drag-right {
   width: 30px;
-  height: 115px;
+  height: 151px;
   float: left;
   cursor: pointer;
   display: block;
@@ -20,7 +20,7 @@
 .time-line-box {
   float: left;
   width: 840px;
-  height: 115px;
+  height: 151px;
   background: url(../image/time-line/line.png) repeat-x 50% 58px;
   position: relative;
   overflow: hidden;

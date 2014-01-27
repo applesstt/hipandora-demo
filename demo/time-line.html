@@ -38,7 +38,7 @@
       var cityData = [{
         month: 10,
         day: 1,
-        city: '北京'
+        city: '北京,天津,大连'
       }, {
         month: 10,
         day: 2,
@@ -60,17 +60,19 @@
         day: 6,
         city: '北京'
       }]
-      timeLine.init({
-        data: cityData,
-        insertDayCallback: function(index) {
-          console.log('insert day callback index: ' + index);
-        },
-        delDayCallback: function(index) {
-          console.log('del day callback index: ' + index);
-        },
-        setCurDayCallback: function(index) {
-          console.log('set current day callback index: ' + index);
-        }
+      $(function() {
+        timeLine.init({
+          data: cityData,
+          insertDayCallback: function(index) {
+            console.log('insert day callback index: ' + index);
+          },
+          delDayCallback: function(index) {
+            console.log('del day callback index: ' + index);
+          },
+          setCurDayCallback: function(index) {
+            console.log('set current day callback index: ' + index);
+          }
+        });
       });
     </script>
   </body>

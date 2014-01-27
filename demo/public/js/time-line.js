@@ -47,13 +47,17 @@ var timeLine = (function() {
   //构造一个日期html
   //data: { month: 10, day: 1, city: '北京' }
   var _getDayHtml = function(data) {
-    var city = data.city;
+    var city = data.city.replace(/,/g, '<br/>');
     var month = parseInt(data.month);
     var day = parseInt(data.day);
     day = day > 10 ? day : ('0' + day);
     var showDate = month + '.' + day;
     return ['<div class="time-line-item">',
-      '<div class="time-line-name">', city, '</div>',
+      '<div class="time-line-name">',
+        '<table><tbody><tr><td>',
+        city,
+        '</td></tr></tbody></table>',
+      '</div>',
       '<div class="time-line-circle">',
         '<div class="time-line-date">', showDate, '</div>',
         '<div class="time-line-del"></div>',
@@ -293,8 +297,9 @@ var timeLine = (function() {
 
   //设置或修改某日的城市名称
   var setCityName = function(index, cityName) {
+    cityName = cityName.replace(/,/g, '<br/>');
     if(typeof index === 'undefined' || typeof cityName === 'undefined') return;
-    $('.time-line-item:eq(' + index + ')').find('.time-line-name').text(cityName);
+    $('.time-line-item:eq(' + index + ')').find('.time-line-name td').html(cityName);
   };
 
   //时间轴初始化

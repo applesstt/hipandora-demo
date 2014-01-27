@@ -11,23 +11,23 @@
   visibility: hidden;
 }
 .drag-left {
-  background: url(../image/time-line/left-btn.png) no-repeat 50% 20px;
+  background: url(../image/time-line/left-btn.png) no-repeat 50% 56px;
 }
 .drag-right {
-  background: url(../image/time-line/right-btn.png) no-repeat 50% 20px;
+  background: url(../image/time-line/right-btn.png) no-repeat 50% 56px;
 }
 
 .time-line-box {
   float: left;
   width: 840px;
   height: 115px;
-  background: url(../image/time-line/line.png) repeat-x 50% 22px;
+  background: url(../image/time-line/line.png) repeat-x 50% 58px;
   position: relative;
   overflow: hidden;
 }
 .time-line-inner {
   position: absolute;
-  top: 20px;
+  top: 56px;
   left: 0;
 }
 
@@ -54,8 +54,17 @@
 .time-line-name {
   position: absolute;
   width: 160px;
-  top: -20px;
+  top: -56px;
   left: -71px;
+  text-align: center;
+}
+.time-line-name table {
+  width: 100%;
+}
+.time-line-name table tr td {
+  height: 54px;
+  vertical-align: bottom;
+  width: 100%;
   text-align: center;
 }
 

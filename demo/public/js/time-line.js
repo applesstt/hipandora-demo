@@ -44,6 +44,16 @@ var timeLine = (function() {
     }
   };
 
+  //构造一个添加按钮的节点
+  var _getAddHtml = function() {
+    return ['<div class="time-line-add">',
+        '<div class="time-line-add-inner">',
+          '<div class="time-line-add-icon"></div>',
+          '<div class="time-line-add-content"></div>',
+        '</div>',
+      '</div>'].join('');
+  };
+
   //构造一个日期html
   //data: { month: 10, day: 1, city: '北京' }
   var _getDayHtml = function(data) {
@@ -63,12 +73,7 @@ var timeLine = (function() {
         '<div class="time-line-del"></div>',
       '</div>',
     '</div>',
-    '<div class="time-line-add">',
-      '<div class="time-line-add-inner">',
-        '<div class="time-line-add-icon"></div>',
-        '<div class="time-line-add-content"></div>',
-      '</div>',
-    '</div>'].join('');
+      _getAddHtml()].join('');
   };
 
   //重置某节点后的显示日期
@@ -84,20 +89,23 @@ var timeLine = (function() {
 
   //插入一天
   var _insertDay = function(index) {
-    var indexDate = _getDateByShow($('.time-line-date:eq(' + index + ')').text());
-    indexDate.setDate(indexDate.getDate() + 1);
+    var _cityIndex = index - 1;
+    var indexDate = _getDateByShow($('.time-line-date:eq(' + (index > 0 ? index - 1 : index) + ')').text());
+    indexDate.setDate(indexDate.getDate() + (index > 0 ? 1 : -1));
     var dayHtml = _getDayHtml({
       month: _getShowMonthByDate(indexDate), day: _getShowDayByDate(indexDate), city: ''
     });
     $('.time-line-add:eq(' + index + ')').after($(dayHtml));
-    insertDayCallback(index + 1);
+    insertDayCallback(_cityIndex + 1);
     _days++;
-    _curDay = index + 1;
+    _curDay = index;
     _hasResetCurDay = true;
-    _resetNextItemDate(index + 1);
+    if(index > 0) {
+      _resetNextItemDate(index);
+    }
     _baseInit();
-    if(index - _firstDay >= 4) {
-      _dragRight(index - _firstDay - 3);
+    if(_cityIndex - _firstDay >= 4) {
+      _dragRight(_cityIndex - _firstDay - 3);
     }
   };
   //删除一天
@@ -163,7 +171,7 @@ var timeLine = (function() {
   //初始化数据项
   var _initData = function(dataList) {
     _days = dataList.length;
-    var htmlAry = [];
+    var htmlAry = [_getAddHtml()];
     for(var i = 0; i < dataList.length; i++) {
       htmlAry.push(_getDayHtml(dataList[i]));
     }
@@ -251,7 +259,7 @@ var timeLine = (function() {
   var _resetCity = function() {
     _resetCurCity();
     //设置第一项的样式
-    $('.time-line-item:eq(0)').addClass('time-line-first');
+    $('.time-line-add:eq(0)').addClass('time-line-add-first');
     _bandItem();
   };
 

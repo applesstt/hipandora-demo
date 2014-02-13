@@ -21,7 +21,7 @@ var timeLine = (function() {
       $('.time-line-inner').animate({
         left: '+=177'
       }, function() {
-          _dragging = false;
+        _dragging = false;
       });
       _firstDay--;
       _baseInit();
@@ -37,21 +37,11 @@ var timeLine = (function() {
       $('.time-line-inner').animate({
         left: '-=' + len
       }, function() {
-          _dragging = false;
+        _dragging = false;
       });
       _firstDay++;
       _baseInit();
     }
-  };
-
-  //构造一个添加按钮的节点
-  var _getAddHtml = function() {
-    return ['<div class="time-line-add">',
-        '<div class="time-line-add-inner">',
-          '<div class="time-line-add-icon"></div>',
-          '<div class="time-line-add-content"></div>',
-        '</div>',
-      '</div>'].join('');
   };
 
   //构造一个日期html
@@ -64,16 +54,21 @@ var timeLine = (function() {
     var showDate = month + '.' + day;
     return ['<div class="time-line-item">',
       '<div class="time-line-name">',
-        '<table><tbody><tr><td>',
-        city,
-        '</td></tr></tbody></table>',
+      '<table><tbody><tr><td>',
+      city,
+      '</td></tr></tbody></table>',
       '</div>',
       '<div class="time-line-circle">',
-        '<div class="time-line-date">', showDate, '</div>',
-        '<div class="time-line-del"></div>',
+      '<div class="time-line-date">', showDate, '</div>',
+      '<div class="time-line-del"></div>',
       '</div>',
-    '</div>',
-      _getAddHtml()].join('');
+      '</div>',
+      '<div class="time-line-add">',
+      '<div class="time-line-add-inner">',
+      '<div class="time-line-add-icon"></div>',
+      '<div class="time-line-add-content"></div>',
+      '</div>',
+      '</div>'].join('');
   };
 
   //重置某节点后的显示日期
@@ -89,23 +84,20 @@ var timeLine = (function() {
 
   //插入一天
   var _insertDay = function(index) {
-    var _cityIndex = index - 1;
-    var indexDate = _getDateByShow($('.time-line-date:eq(' + (index > 0 ? index - 1 : index) + ')').text());
-    indexDate.setDate(indexDate.getDate() + (index > 0 ? 1 : -1));
+    var indexDate = _getDateByShow($('.time-line-date:eq(' + index + ')').text());
+    indexDate.setDate(indexDate.getDate() + 1);
     var dayHtml = _getDayHtml({
       month: _getShowMonthByDate(indexDate), day: _getShowDayByDate(indexDate), city: ''
     });
     $('.time-line-add:eq(' + index + ')').after($(dayHtml));
-    insertDayCallback(_cityIndex + 1);
+    insertDayCallback(index + 1);
     _days++;
-    _curDay = index;
+    _curDay = index + 1;
     _hasResetCurDay = true;
-    if(index > 0) {
-      _resetNextItemDate(index);
-    }
+    _resetNextItemDate(index + 1);
     _baseInit();
-    if(_cityIndex - _firstDay >= 4) {
-      _dragRight(_cityIndex - _firstDay - 3);
+    if(index - _firstDay >= 4) {
+      _dragRight(index - _firstDay - 3);
     }
   };
   //删除一天
@@ -147,10 +139,10 @@ var timeLine = (function() {
         addContent.show();
       }
     }).hover(function() {
-      $(this).find('.time-line-add-inner').show();
-    }, function() {
-      $(this).find('.time-line-add-inner').hide();
-    });
+        $(this).find('.time-line-add-inner').show();
+      }, function() {
+        $(this).find('.time-line-add-inner').hide();
+      });
   };
 
   //删除确认框
@@ -171,7 +163,7 @@ var timeLine = (function() {
   //初始化数据项
   var _initData = function(dataList) {
     _days = dataList.length;
-    var htmlAry = [_getAddHtml()];
+    var htmlAry = [];
     for(var i = 0; i < dataList.length; i++) {
       htmlAry.push(_getDayHtml(dataList[i]));
     }
@@ -259,7 +251,7 @@ var timeLine = (function() {
   var _resetCity = function() {
     _resetCurCity();
     //设置第一项的样式
-    $('.time-line-add:eq(0)').addClass('time-line-add-first');
+    $('.time-line-item:eq(0)').addClass('time-line-first');
     _bandItem();
   };
 
@@ -284,7 +276,7 @@ var timeLine = (function() {
   var _drawFrame = function() {
     var _frameAry = ['<div class="drag-left"></div>',
       '<div class="time-line-box">',
-        '<div class="time-line-inner clearfix"></div>',
+      '<div class="time-line-inner clearfix"></div>',
       '</div>',
       '<div class="drag-right"></div>'];
     $('.time-line').html(_frameAry.join(''));

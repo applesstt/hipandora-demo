@@ -122,27 +122,35 @@ var timeLine = (function() {
 
   //初始化添加一天按钮
   var _initAddFun = function() {
+    //设置最後一项addBtn的宽度
+    $('.time-line-add').removeClass('time-line-add-last');
+    $('.time-line-add:last').addClass('time-line-add-last');
+
     $('.time-line-add-icon').unbind('click').each(function(index, element) {
       $(element).click(function() {
         _insertDay(index);
       });
     });
-    $('.time-line-add').unbind('mousemove').unbind('hover').mousemove(function(e) {
-      var contentLeft = e.pageX - $(this).offset().left - 11;
-      var addContent = $(this).find('.time-line-add-inner');
-      addContent.css('left', contentLeft + 'px');
-      var top = e.pageY - $(this).offset().top - 5 - 2 - 11;
-      //判断如果贴近城市 或者鼠标划出+图标区域是 隐藏添加一天区域
-      if(contentLeft < 0 || contentLeft > 142 - 22 || top > 0) {
-        addContent.hide();
-      } else {
-        addContent.show();
-      }
-    }).hover(function() {
+    var _citySize = $('.time-line-add').length;
+    $('.time-line-add').unbind('mousemove hover').each(function(index) {
+      var _isLast = index + 1 == _citySize && true;
+      $(this).mousemove(function(e) {
+        var contentLeft = e.pageX - $(this).offset().left - 11;
+        var addContent = $(this).find('.time-line-add-inner');
+        addContent.css('left', contentLeft + 'px');
+        var top = e.pageY - $(this).offset().top - 5 - 2 - 11;
+        //判断如果贴近城市 或者鼠标划出+图标区域是 隐藏添加一天区域
+        if(contentLeft < 0 || (!_isLast && (contentLeft > 142 - 22)) || top > 0) {
+          addContent.hide();
+        } else {
+          addContent.show();
+        }
+      }).hover(function() {
         $(this).find('.time-line-add-inner').show();
       }, function() {
         $(this).find('.time-line-add-inner').hide();
       });
+    });
   };
 
   //删除确认框
@@ -172,7 +180,7 @@ var timeLine = (function() {
 
   //重置内部宽度
   var _resizeInnerWidth = function() {
-    $('.time-line-inner').css('width', _days * 177 + 200);
+    $('.time-line-inner').css('width', _days * 177 + 200 + 1000);
   };
 
   //根据月份 日期 返回对应的Date对象

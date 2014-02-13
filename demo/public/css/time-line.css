@@ -113,6 +113,9 @@
   overflow: hidden;
   cursor: pointer;
 }
+.time-line-add-last {
+  width: 1142px;
+}
 .time-line-add-inner {
   width: 22px;
   height: 89px;

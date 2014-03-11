@@ -1,0 +1,60 @@
+extends layout/layout
+
+block content
+  link(rel='stylesheet', href='public/css/feedback.css')
+  .wrap
+    .wrap-inner
+      .feedback-top.clearfix
+        .feedback-tabs.clearfix
+          a.feedback-tab-sel(href='/') 收到的评论
+            em （共 50 条）
+          .feedback-tab-line |
+          a(href='/') 发出的评论
+            em （共 0 条）
+        .feedback-filter
+          span 筛选
+          select
+            option 全部评论
+      .feedback-list
+        - for(var i = 0; i < 10; i++)
+          - var cls = 'clearfix feedback-row' +  (i < 3 ? ' feedback-row-readed' : '')
+          - cls += i == 9 ? ' feedback-row-last' : ''
+          div(class=cls)
+            img.feedback-row-account.account-tip(src='public/image/demo/account-40.png')
+            .feedback-row-content
+              .feedback-row-title
+                a(href='/') Fanny
+                | 在我的【手记】2013新年欧洲6国19日游
+              .feedback-row-feed 评论：
+                a(href='/') "想看哪个城市可以给我留言，我先传那个城市..."
+            .feedback-row-num 34 条评论
+            .feedback-row-time 26 秒前
+            .feedback-row-action
+              a(href='/') 查看
+      .p10
+        include include/pager
+  #tip-template.none
+    .account-tip
+      .account-tip-content.clearfix
+        img.account-tip-image(src='public/image/demo/account-40.png')
+        .account-tip-info
+          .account-tip-title
+            a(href='javascript:{}') 与温暖终年不遇g
+            |&nbsp;-&nbsp;女神
+          a.account-tip-focus(href='javascript:{}') 关注
+      .account-tip-footer.clearfix
+        a(href='javascript:{}') 个人手记
+        a(href='javascript:{}') 装备秀
+        a(href='javascript:{}') 旅行相册
+        a(href='javascript:{}') 忠告
+        a(href='javascript:{}') 美食
+        a.account-tip-footer-link-last(href='javascript:{}') ...
+  script.
+    $(function() {
+      $('.account-tip').tooltipster({
+        interactive: true,
+        theme: '.tooltipster-shadow',
+        position: 'bottom-left',
+        content: $('#tip-template').html()
+      });
+    });

@@ -31,6 +31,7 @@ app.get('/feedback', routes.feedback);
 app.get('/notice', routes.notice);
 app.get('/timeLine', routes.timeLine);
 app.get('/coolTag', routes.coolTag);
+app.get('/tooltip', routes.tooltip);
 
 http.createServer(app).listen(app.get('port'), function(){
   console.log('Express server listening on port ' + app.get('port'));

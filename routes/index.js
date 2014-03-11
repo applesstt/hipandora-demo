@@ -18,3 +18,7 @@ exports.timeLine = function(req, res) {
 exports.coolTag = function(req, res) {
   res.render('cool-tag');
 };
+
+exports.tooltip = function(req, res) {
+  res.render('tooltip');
+}

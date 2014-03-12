@@ -18,8 +18,7 @@
   top: -5px;
   overflow: hidden;
 }
-.tooltip span:before {
-  content: ".";
+.tooltip span b {
   background: url(../image/demo/account-40.png) no-repeat -5px 0px;
   transform: rotate(-45deg);
   -ms-transform:rotate(-45deg); /* IE 9 */
@@ -31,4 +30,18 @@
   position: absolute;
   left: -5px;
   top: -5px;
+}
+.tooltip-down {
+  margin-top: 0;
+  margin-bottom: 20px;
+  background-position: 0 0;
+}
+.tooltip-down span {
+  bottom: -5px;
+  top: inherit;
+}
+.tooltip-down span b {
+  background-position: 5px 0px;
+  bottom: -5px;
+  top: inherit;
 }

@@ -5,7 +5,7 @@
   background: url(../image/demo/account-40.png) no-repeat 0 -10px;
   margin-top: 20px;
 }
-.tooltip em {
+.tooltip span {
   transform: rotate(45deg);
   -ms-transform:rotate(45deg); /* IE 9 */
   -moz-transform:rotate(45deg); /* Firefox */
@@ -18,7 +18,8 @@
   top: -5px;
   overflow: hidden;
 }
-.tooltip b {
+.tooltip span:before {
+  content: ".";
   background: url(../image/demo/account-40.png) no-repeat -5px 0px;
   transform: rotate(-45deg);
   -ms-transform:rotate(-45deg); /* IE 9 */
